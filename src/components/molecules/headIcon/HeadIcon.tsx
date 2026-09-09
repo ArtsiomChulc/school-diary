@@ -2,9 +2,11 @@ import s from './HeadIcon.module.css';
 
 interface IconProps {
     size?: number;
+    title?: string;
+    subtitle?: string;
 }
 
-export const HeadIcon = ({size = 24}: IconProps) => {
+export const HeadIcon = ({size = 24, title = 'Школьный дневник', subtitle = 'Academic portal'}: IconProps) => {
     return (
         <div className={s.icon_container}>
             <div className={s.icon_wrap}>
@@ -15,8 +17,8 @@ export const HeadIcon = ({size = 24}: IconProps) => {
                 </svg>
             </div>
             <div>
-                <p className={s.title_icon}>Школьный дневник</p>
-                <p className={s.subtitle_icon}>Academic portal</p>
+                <p className={s.title_icon}>{title}</p>
+                <p className={s.subtitle_icon}>{subtitle}</p>
             </div>
         </div>
     );

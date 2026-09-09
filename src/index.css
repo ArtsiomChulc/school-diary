@@ -1,8 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --text-secondary: #757575;
   --text-main: #212121;
   --bg: #f7f3eb;
-  --border: #e5e4e7;
+  --border: #ded2c3;
   --form-bg: rgba(254, 251, 247, 0.95);
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
@@ -68,7 +72,7 @@ h1,
 h2 {
   font-family: var(--heading), serif;
   font-weight: 500;
-  color: var(--text-h);
+  color: var(--text-secondary);
 }
 
 h1 {
