@@ -3,6 +3,7 @@ import {HeadIcon} from "../../components/molecules/headIcon/HeadIcon.tsx";
 import {Input} from "../../components/atoms/input/Input.tsx";
 import {Mail, LockOpen} from "lucide-react";
 import s from './SignIn.module.css'
+import {Button} from "../../components/atoms/button/Button.tsx";
 
 export const SignIn = () => {
     return (
@@ -30,6 +31,7 @@ export const SignIn = () => {
                            icon={<LockOpen size={20} strokeWidth={1.5} />}
                            required
                     />
+                    <Button text={'Войти'} type={'submit'}/>
                 </form>
             </FormContainer>
         </div>
