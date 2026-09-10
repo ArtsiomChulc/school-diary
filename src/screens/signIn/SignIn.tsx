@@ -19,7 +19,7 @@ export const SignIn = () => {
                            label="Почтовый адрес"
                            type="email"
                            placeholder="you@school.com"
-                           onChange={(e) => setEmail(e.target.value)}
+                           onChange={() => {}}
                            icon={<Mail size={20} strokeWidth={1.5} />}
                            required
                     />
@@ -27,7 +27,7 @@ export const SignIn = () => {
                            label="Пароль"
                            type="password"
                            placeholder="Введи свой  пароль"
-                           onChange={(e) => setPassword(e.target.value)}
+                           onChange={() => {}}
                            icon={<LockOpen size={20} strokeWidth={1.5} />}
                            required
                     />
