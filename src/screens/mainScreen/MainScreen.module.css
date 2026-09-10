@@ -1,0 +1,11 @@
+.header {
+    width: 100%;
+    min-height: 80px;
+    border-bottom: 0.80px solid #ded2c3;
+    backdrop-filter: blur(12px);
+    background: var(--bg-header);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

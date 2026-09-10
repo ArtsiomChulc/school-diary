@@ -1,12 +1,13 @@
 import {MainContainer} from "./components/organizms/containers/main_container/MainContainer.tsx";
-import {SignIn} from "./screens/signIn/SignIn.tsx";
+import {MainScreen} from "./screens/mainScreen/MainScreen.tsx";
 import './App.css'
 
 export const App = () => {
 
   return (
     <MainContainer>
-      <SignIn/>
+      {/*<SignIn/>*/}
+        <MainScreen/>
     </MainContainer>
   )
 }

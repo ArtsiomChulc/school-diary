@@ -1,0 +1,24 @@
+.nick_name_wrap {
+    border: 1px solid #ded2c3;
+    border-radius: 18px;
+    width: 49px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inside_circle {
+    border-radius: 13px;
+    width: 32px;
+    height: 32px;
+    background: #efe5d4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
+    color: var(--text-main);
+}

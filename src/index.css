@@ -7,6 +7,7 @@
     --text-main: #212121;
     --text-color-btn: #fbf8f1;
     --bg: #f7f3eb;
+    --bg-header: rgba(247, 243, 235, 0.9);
     --border: #ded2c3;
     --bg-button-form: #094328;
     --form-bg: rgba(254, 251, 247, 0.95);
@@ -41,6 +42,7 @@
 /*        --text-secondary: #f3f4f6;*/
 /*        --text-color-btn: #fbf8f1;*/
 /*        --bg: #16171d;*/
+/*        --bg-header: #1f2028;*/
 /*        --border: #2e303a;*/
 /*        --form-bg: #1f2028;*/
 /*        --bg-button-form: #094328;*/
