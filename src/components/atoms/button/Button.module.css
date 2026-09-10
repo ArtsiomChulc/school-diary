@@ -4,10 +4,16 @@
     background: var(--bg-button-form);
     width: 100%;
     padding-block: 14.4px;
+    cursor: pointer;
 
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;
     text-align: center;
     color: var(--text-color-btn);
+    transition: transform 0.2s ease-in-out;
+}
+
+.button:active {
+    transform: scale(1.02);
 }
