@@ -105,16 +105,11 @@ class UserStore {
         termKey: 'term_1' | 'term_2' | 'term_3' | 'term_4',
         newMark: number
     ) => {
-        // КРИТИЧЕСКАЯ ПРОВЕРКА: Разрешаем добавление только если роль пользователя — parent
-        if (!this.profile || this.profile.role !== 'parent') {
-            console.error('Ошибка доступа: Только пользователи с ролью "parent" могут выставлять оценки.');
-            runInAction(() => {
-                this.authError = 'У вас нет прав для выполнения этого действия.';
-            });
+        // Проверяем, авторизован ли пользователь в системе (зарегистрирован)
+        if (!this.user || !this.profile || !this.profile.subjects) {
+            console.error('Ошибка: Пользователь не авторизован или профиль не загружен.');
             return;
         }
-
-        if (!this.profile.subjects) return;
 
         try {
             runInAction(() => { this.isLoading = true; });
@@ -148,6 +143,7 @@ class UserStore {
                 this.isLoading = false;
             });
 
+            console.log(`Оценка ${newMark} успешно добавлена. Новый итог: ${calculatedFinalMark}`);
         } catch (error) {
             console.error('Ошибка при сохранении:', error);
             runInAction(() => { this.isLoading = false; });
@@ -160,13 +156,11 @@ class UserStore {
         termKey: 'term_1' | 'term_2' | 'term_3' | 'term_4',
         markIndex: number
     ) => {
-        // Проверка прав: только parent может удалять оценки
-        if (!this.profile || this.profile.role !== 'parent') {
-            console.error('Ошибка доступа: Только родители могут удалять оценки.');
+        // Проверяем, авторизован ли пользователь в системе (зарегистрирован)
+        if (!this.user || !this.profile || !this.profile.subjects) {
+            console.error('Ошибка: Пользователь не авторизован или профиль не загружен.');
             return;
         }
-
-        if (!this.profile.subjects) return;
 
         try {
             runInAction(() => { this.isLoading = true; });
@@ -212,6 +206,7 @@ class UserStore {
             runInAction(() => { this.isLoading = false; });
         }
     }
+
 
     login = async (email: string, password: string) => {
         try {
