@@ -8,7 +8,9 @@
     --text-color-btn: #fbf8f1;
     --bg: #f7f3eb;
     --bg-header: rgba(247, 243, 235, 0.9);
+    --bg-blocks: #efe5d4;
     --border: #ded2c3;
+    --danger: rgb(255 90 31 / 0.73);
     --bg-button-form: #094328;
     --form-bg: rgba(254, 251, 247, 0.95);
     --accent: #aa3bff;
@@ -43,7 +45,9 @@
 /*        --text-color-btn: #fbf8f1;*/
 /*        --bg: #16171d;*/
 /*        --bg-header: #1f2028;*/
+/*        --bg-blocks: #efe5d4;*/
 /*        --border: #2e303a;*/
+/*        --danger: rgb(255 90 31 / 0.73);*/
 /*        --form-bg: #1f2028;*/
 /*        --bg-button-form: #094328;*/
 /*        --accent: #c084fc;*/
@@ -72,7 +76,7 @@ h1,
 h2 {
     font-family: var(--heading), serif;
     font-weight: 500;
-    color: var(--text-secondary);
+    color: var(--text-main);
 }
 
 h1 {
@@ -97,4 +101,12 @@ h2 {
 
 p {
     margin: 0;
+    color: var(--text-secondary);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
 }

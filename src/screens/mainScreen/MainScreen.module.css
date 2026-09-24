@@ -9,3 +9,28 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.main_content {
+    width: 100%;
+    padding-inline: 16px;
+}
+
+.main_content > .info_block > .info_block_text > h1 {
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 111%;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+.main_content > .info_block > .info_block_text > p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 171%;
+    text-align: left;
+}
+
+.info_block_nav {
+    border-radius: 18px;
+    background: var(--bg-blocks);
+}

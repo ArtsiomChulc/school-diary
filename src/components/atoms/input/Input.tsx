@@ -1,9 +1,9 @@
-import { type InputHTMLAttributes } from "react";
+import { type InputHTMLAttributes, type ReactNode} from "react";
 import s from "./Input.module.css";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
-    icon: React.ReactNode;
+    icon: ReactNode;
 }
 
 export const Input = ({ label, icon, id, ...props }: InputProps) => {

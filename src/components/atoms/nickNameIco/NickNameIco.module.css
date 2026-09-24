@@ -1,18 +1,18 @@
 .nick_name_wrap {
     border: 1px solid #ded2c3;
     border-radius: 18px;
-    width: 49px;
-    height: 45px;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 12px;
 }
 
 .inside_circle {
-    border-radius: 13px;
     width: 32px;
     height: 32px;
-    background: #efe5d4;
+    border-radius: 13px;
+    background: var(--bg-blocks);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,4 +21,31 @@
     line-height: 150%;
     text-align: center;
     color: var(--text-main);
+}
+
+.full_name {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.full_name span:nth-child(1) {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 130px;
+}
+
+.full_name span:nth-child(2) {
+    color: var(--text-secondary);
+}
+
+.logout_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: 10px;
 }
