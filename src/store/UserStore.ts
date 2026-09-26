@@ -2,6 +2,7 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import {collection, doc, getDoc, getDocs, updateDoc} from 'firebase/firestore';
 import {onAuthStateChanged, signInWithEmailAndPassword, type User as FirebaseUser} from 'firebase/auth';
 import {auth, db} from "../../firebase.ts";
+import toast from "react-hot-toast";
 
 export interface ITermMarks {
     marks: number[];
@@ -85,6 +86,7 @@ class UserStore {
                     this.isLoading = false;
                 });
             } else {
+                toast.error('Документ пользователя не найден в Firestore');
                 console.error('Документ пользователя не найден в Firestore');
                 runInAction(() => {
                     this.profile = null;
@@ -92,6 +94,7 @@ class UserStore {
                 });
             }
         } catch (error) {
+            toast.error('Ошибка при получении профиля');
             console.error('Ошибка при получении профиля:', error);
             runInAction(() => {
                 this.isLoading = false;
@@ -107,6 +110,7 @@ class UserStore {
     ) => {
         // Проверяем, авторизован ли пользователь в системе (зарегистрирован)
         if (!this.user || !this.profile || !this.profile.subjects) {
+            toast.error('Ошибка: Пользователь не авторизован или профиль не загружен.', {duration: 3500});
             console.error('Ошибка: Пользователь не авторизован или профиль не загружен.');
             return;
         }
@@ -142,9 +146,9 @@ class UserStore {
                 }
                 this.isLoading = false;
             });
-
-            console.log(`Оценка ${newMark} успешно добавлена. Новый итог: ${calculatedFinalMark}`);
+            toast.success(`Оценка ${newMark} успешно добавлена. Новый итог: ${calculatedFinalMark}`, {duration: 3000});
         } catch (error) {
+            toast.error('Ошибка при сохранении');
             console.error('Ошибка при сохранении:', error);
             runInAction(() => { this.isLoading = false; });
         }
@@ -156,8 +160,8 @@ class UserStore {
         termKey: 'term_1' | 'term_2' | 'term_3' | 'term_4',
         markIndex: number
     ) => {
-        // Проверяем, авторизован ли пользователь в системе (зарегистрирован)
         if (!this.user || !this.profile || !this.profile.subjects) {
+            toast.error('Ошибка: Пользователь не авторизован или профиль не загружен.');
             console.error('Ошибка: Пользователь не авторизован или профиль не загружен.');
             return;
         }
@@ -199,9 +203,8 @@ class UserStore {
                 }
                 this.isLoading = false;
             });
-
-            console.log(`Оценка успешно удалена. Новый итог: ${calculatedFinalMark ?? 'нет оценок'}`);
         } catch (error) {
+            toast.error('Ошибка при удалении оценки');
             console.error('Ошибка при удалении оценки:', error);
             runInAction(() => { this.isLoading = false; });
         }

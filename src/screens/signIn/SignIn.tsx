@@ -16,12 +16,10 @@ export const SignIn = () => {
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        // Простейшая валидация перед отправкой
         if (!email.trim() || !password.trim()) {
             return;
         }
 
-        // Вызываем метод стора
         await login(email, password);
     };
 

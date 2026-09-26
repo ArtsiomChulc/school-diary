@@ -1,13 +1,13 @@
 import {Hamburger} from "../../components/molecules/hamburger/Hamburger.tsx";
 import {NickNameIco} from "../../components/atoms/nickNameIco/NickNameIco.tsx";
 import {userStore} from "../../store/UserStore.ts";
-import s from './MainScreen.module.css';
 import {Dashboard} from "../../components/organizms/dashboard/Dashboard.tsx";
+import s from './MainScreen.module.css';
 
 export const MainScreen = () => {
 
     const { profile } = userStore;
-
+//todo delete code
     // const handleCreateUser = async () => {
     //     await quickCreateUser()
     // }
@@ -34,7 +34,6 @@ export const MainScreen = () => {
                             что вас ждет в этой учебной четверти.</p>
                     </div>
                     <div className={s.info_block_nav}>
-
                         <Dashboard/>
                     </div>
                 </div>

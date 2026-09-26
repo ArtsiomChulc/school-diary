@@ -1,0 +1,121 @@
+.container {
+    padding: 12px;
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+.title {
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.description {
+    color: #718096;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+    border-radius: 8px; /* Если нужно сохранить округление углов */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+    width: 100%;
+    min-width: 650px; /* Минимальная ширина, ниже которой таблица начнет прокручиваться */
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.th {
+    background-color: #4a5568;
+    color: #fff;
+    padding: 12px;
+    font-size: 14px;
+    text-align: center;
+    width: 12%;
+}
+
+.thLeft {
+    background-color: #4a5568;
+    color: #fff;
+    padding: 12px;
+    font-size: 14px;
+    text-align: left;
+    width: 40%;
+}
+
+.thYearly {
+    background-color: #2b6cb0;
+    color: #fff;
+    padding: 12px;
+    font-size: 14px;
+    text-align: center;
+    width: 12%;
+    font-weight: bold;
+}
+
+.tr {
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.2s;
+}
+
+.tr:hover {
+    background-color: #f7fafc;
+}
+
+.tdName {
+    padding: 16px;
+    color: #3182ce;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.tdName:hover {
+    text-decoration: underline;
+}
+
+.tdMark {
+    padding: 16px;
+    text-align: center;
+}
+
+.finalMarkBadge {
+    background-color: #e6fffa;
+    color: #2f855a;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+    border: 1px solid #b2f5ea;
+    display: inline-block;
+    min-width: 24px;
+}
+
+.yearlyMarkBadge {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    border: 1px solid #bee3f8;
+    display: inline-block;
+    min-width: 32px;
+    font-size: 15px;
+}
+
+.empty {
+    color: #cbd5e0;
+}
+
+.centered {
+    text-align: center;
+    padding: 40px;
+    color: #718096;
+}

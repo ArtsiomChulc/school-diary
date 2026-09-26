@@ -5,6 +5,7 @@ import {userStore} from "./store/UserStore.ts";
 import {SignIn} from "./screens/signIn/SignIn.tsx";
 import Loading from "./components/organizms/loading/Loading.tsx";
 import './App.css'
+import {Toaster} from "react-hot-toast";
 
 export const App = observer(() => {
 
@@ -20,6 +21,7 @@ export const App = observer(() => {
 
     return (
     <MainContainer>
+        <Toaster position="top-center" />
         <MainScreen/>
     </MainContainer>
   )
