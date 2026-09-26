@@ -1,4 +1,3 @@
-import {Hamburger} from "../../components/molecules/hamburger/Hamburger.tsx";
 import {NickNameIco} from "../../components/atoms/nickNameIco/NickNameIco.tsx";
 import {userStore} from "../../store/UserStore.ts";
 import {Dashboard} from "../../components/organizms/dashboard/Dashboard.tsx";
