@@ -23,7 +23,7 @@ export const MainScreen = () => {
     return (
         <div className={s.main_screen}>
             <header className={s.header}>
-                <Hamburger isOpen={false} onToggle={() => {}}/>
+                {/*<Hamburger isOpen={false} onToggle={() => {}}/>*/}
                 <NickNameIco fullName={profile?.name} role={profile?.role} />
             </header>
             <main className={s.main_content}>

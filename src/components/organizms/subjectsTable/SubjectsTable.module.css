@@ -1,8 +1,10 @@
 .container {
-    padding: 12px;
+    padding: 20px 12px;
     width: 100%;
     max-width: 950px;
-    margin: 0 auto;
+    margin-inline: auto;
+    margin-bottom: 20px;
+    margin-top: 10px;
     font-family: sans-serif;
     overflow: hidden;
 }
