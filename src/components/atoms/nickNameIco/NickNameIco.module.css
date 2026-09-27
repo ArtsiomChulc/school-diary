@@ -1,52 +1,54 @@
 .nick_name_wrap {
-    border: 1px solid #ded2c3;
-    border-radius: 18px;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-left: auto;
+  width: 100%;
+  max-width: 250px;
+  border: 1px solid #ded2c3;
+  border-radius: 18px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
 }
 
 .inside_circle {
-    width: 32px;
-    height: 32px;
-    border-radius: 13px;
-    background: var(--bg-blocks);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 150%;
-    text-align: center;
-    color: var(--text-main);
+  width: 32px;
+  height: 32px;
+  border-radius: 13px;
+  background: var(--bg-blocks);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--text-main);
 }
 
 .full_name {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
 }
 
 .full_name span:nth-child(1) {
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 130px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 130px;
 }
 
 .full_name span:nth-child(2) {
-    color: var(--text-secondary);
+  color: var(--text-secondary);
 }
 
 .logout_icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 4px;
-    margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 10px;
 }

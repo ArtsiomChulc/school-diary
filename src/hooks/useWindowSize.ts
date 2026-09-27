@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const useWindowWidth = (): number => {
   const [windowWidth, setWindowWidth] = useState<number>(0);
@@ -6,12 +6,12 @@ const useWindowWidth = (): number => {
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
 
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       setWindowWidth(window.innerWidth);
-      window.addEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
 
       return () => {
-        window.removeEventListener('resize', handleResize);
+        window.removeEventListener("resize", handleResize);
       };
     }
   }, []);

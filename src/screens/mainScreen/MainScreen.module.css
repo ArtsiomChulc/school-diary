@@ -1,82 +1,88 @@
 .main_screen {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .header {
-    width: 100%;
-    min-height: 80px;
-    border-bottom: 0.80px solid #ded2c3;
-    backdrop-filter: blur(12px);
-    background: var(--bg-header);
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 100%;
+  min-height: 80px;
+  border-bottom: 0.8px solid #ded2c3;
+  backdrop-filter: blur(12px);
+  background: var(--bg-header);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .calc_btn {
-    background-color: #2b6cb0;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 13px;
-    transition: background-color 0.2s, transform 0.1s;
-    font-family: sans-serif;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: var(--text-main);
+  cursor: pointer;
+  font-weight: bold;
+  background-color: var(--bg);
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+  font-family: sans-serif;
 }
 
-.calc_btn:hover {
-    background-color: #2b5592;
+.calc_btn span {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-direction: column;
 }
 
 .calc_btn:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
 /* Активное состояние кнопки, когда калькулятор уже открыт */
 .calc_btn_active {
-    background-color: #4a5568;
+  background-color: #4a5568;
 }
 
 .calc_btn_active:hover {
-    background-color: #2d3748;
+  background-color: #2d3748;
 }
 
 /* Стили для сообщений загрузки */
 .centered {
-    text-align: center;
-    padding: 40px;
-    color: #718096;
-    font-family: sans-serif;
+  text-align: center;
+  padding: 40px;
+  color: #718096;
+  font-family: sans-serif;
 }
 
 .main_content {
-    width: 100%;
-    padding-inline: 16px;
+  width: 100%;
+  padding-inline: 16px;
 }
 
 .main_content > .info_block > .info_block_text > h1 {
-    font-weight: 400;
-    font-size: 36px;
-    line-height: 111%;
-    letter-spacing: -0.02em;
-    text-align: left;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 111%;
+  letter-spacing: -0.02em;
+  text-align: left;
 }
 
 .main_content > .info_block > .info_block_text > p {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 171%;
-    text-align: left;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 171%;
+  text-align: left;
 }
 
 .info_block_nav {
-    width: 100%;
-    overflow: hidden;
-    border-radius: 18px;
-    background: var(--bg-blocks);
+  width: 100%;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--bg-blocks);
 }
