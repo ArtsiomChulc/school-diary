@@ -2,7 +2,7 @@ import {NickNameIco} from "../../components/atoms/nickNameIco/NickNameIco.tsx";
 import {userStore} from "../../store/UserStore.ts";
 import {Dashboard} from "../../components/organizms/dashboard/Dashboard.tsx";
 import {useState} from "react";
-import {observer} from "mobx-react-lite/src/observer.ts";
+import { observer } from 'mobx-react-lite';
 import s from './MainScreen.module.css';
 
 export const MainScreen = observer(() => {
