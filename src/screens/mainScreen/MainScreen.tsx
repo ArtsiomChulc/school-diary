@@ -1,18 +1,23 @@
 import {NickNameIco} from "../../components/atoms/nickNameIco/NickNameIco.tsx";
 import {userStore} from "../../store/UserStore.ts";
 import {Dashboard} from "../../components/organizms/dashboard/Dashboard.tsx";
+import {useState} from "react";
+import {observer} from "mobx-react-lite/src/observer.ts";
 import s from './MainScreen.module.css';
 
-export const MainScreen = () => {
+export const MainScreen = observer(() => {
+
+    const [view, setView] = useState<'diary' | 'calculator'>('diary');
 
     const { profile } = userStore;
 //todo delete code
     // const handleCreateUser = async () => {
     //     await quickCreateUser()
-    // }
 
+    // }
     if (!profile) {
         return <div>Пользователь не авторизован</div>;
+
     }
 
     if (!profile.subjects || Object.keys(profile.subjects).length === 0) {
@@ -22,6 +27,12 @@ export const MainScreen = () => {
     return (
         <div className={s.main_screen}>
             <header className={s.header}>
+                <button
+                    onClick={() => setView(view === 'calculator' ? 'diary' : 'calculator')}
+                    className={`${s.calc_btn} ${view === 'calculator' ? s.calc_btn_active : ''}`}
+                >
+                    {view === 'calculator' ? '📋 В дневник' : '🔮 Калькулятор оценок'}
+                </button>
                 {/*<Hamburger isOpen={false} onToggle={() => {}}/>*/}
                 <NickNameIco fullName={profile?.name} role={profile?.role} />
             </header>
@@ -33,10 +44,10 @@ export const MainScreen = () => {
                             что вас ждет в этой учебной четверти.</p>
                     </div>
                     <div className={s.info_block_nav}>
-                        <Dashboard/>
+                        <Dashboard externalView={view} setExternalView={setView}/>
                     </div>
                 </div>
             </main>
         </div>
     );
-};
+});

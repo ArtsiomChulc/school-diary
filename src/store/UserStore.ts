@@ -210,6 +210,60 @@ class UserStore {
         }
     }
 
+    /**
+     * Возвращает прогноз: сколько и каких оценок нужно получить до желаемого балла
+     * @param currentMarks Массив текущих оценок четверти
+     * @param targetMark Желаемая итоговая оценка (например, 8)
+     */
+    getPrediction(currentMarks: number[], targetMark: number): string {
+        if (targetMark < 1 || targetMark > 10) return 'Оценка должна быть от 1 до 10';
+
+        const sum = currentMarks.reduce((a, b) => a + b, 0);
+        const count = currentMarks.length;
+
+        // Если оценок еще нет, достаточно получить одну желаемую оценку
+        if (count === 0) {
+            return `Чтобы получить ${targetMark}, достаточно получить одну ${targetMark}.`;
+        }
+
+        // Проверяем текущий средний балл с округлением Math.round
+        const currentAverage = sum / count;
+        if (Math.round(currentAverage) >= targetMark) {
+            return `У тебя уже выходит ${targetMark} или выше! Отличная работа! 🎉`;
+        }
+
+        // Минимальный средний балл, который при округлении даст targetMark (например, для 8 это 7.5)
+        const requiredAverage = targetMark - 0.5;
+
+        // Алгоритм подбора: ищем сколько нужно 10-ок или 9-ок
+        // Формула: (ТекущаяСумма + N * Балл) / (ТекущееКоличество + N) >= requiredAverage
+        // Отсюда: N >= (requiredAverage * ТекущееКоличество - ТекущаяСумма) / (Балл - requiredAverage)
+
+        // Сначала пробуем идеальный вариант — получать только 10-ки
+        if (targetMark <= 10) {
+            const denominator10 = 10 - requiredAverage;
+            if (denominator10 > 0) {
+                const needed10 = Math.ceil((requiredAverage * count - sum) / denominator10);
+                if (needed10 > 0 && needed10 <= 15) { // Ограничим разумным количеством
+                    return `Тебе нужно получить еще столько оценок "10": ${needed10} шт. 🚀`;
+                }
+            }
+        }
+
+        // Если 10-ки не подходят или желаемый балл ниже, пробуем подбор других высоких оценок (например, 9)
+        if (targetMark <= 9) {
+            const denominator9 = 9 - requiredAverage;
+            if (denominator9 > 0) {
+                const needed9 = Math.ceil((requiredAverage * count - sum) / denominator9);
+                if (needed9 > 0 && needed9 <= 15) {
+                    return `Тебе нужно получить еще столько оценок "9": ${needed9} шт. 👍`;
+                }
+            }
+        }
+
+        return `К сожалению, поднять балл до ${targetMark} в этой четверти математически почти невозможно. 📊`;
+    }
+
 
     login = async (email: string, password: string) => {
         try {
