@@ -10,12 +10,12 @@
 }
 
 .title {
-  color: #2d3748;
+  color: var(--text-main);
   margin-bottom: 8px;
 }
 
 .description {
-  color: #718096;
+  color: var(--text-secondary);
   margin-bottom: 20px;
   font-size: 14px;
 }
@@ -32,12 +32,12 @@
   width: 100%;
   min-width: 650px; /* Минимальная ширина, ниже которой таблица начнет прокручиваться */
   border-collapse: collapse;
-  background-color: #fff;
+  background-color: var(--bg);
 }
 
 .th {
-  background-color: #4a5568;
-  color: #fff;
+  background-color: var(--bg);
+  color: var(--text-main);
   padding: 12px;
   font-size: 14px;
   text-align: center;
@@ -45,8 +45,8 @@
 }
 
 .thLeft {
-  background-color: #4a5568;
-  color: #fff;
+  background-color: var(--bg);
+  color: var(--text-main);
   padding: 12px;
   font-size: 14px;
   text-align: left;
@@ -54,8 +54,8 @@
 }
 
 .thYearly {
-  background-color: #2b6cb0;
-  color: #fff;
+  background-color: var(--accent-border);
+  color: var(--text-main);
   padding: 12px;
   font-size: 14px;
   text-align: center;
@@ -64,17 +64,17 @@
 }
 
 .tr {
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border);
   transition: background-color 0.2s;
 }
 
 .tr:hover {
-  background-color: #f7fafc;
+  background-color: var(--hover-tr);
 }
 
 .tdName {
   padding: 16px;
-  color: #3182ce;
+  color: var(--accent);
   font-weight: bold;
   cursor: pointer;
   text-transform: capitalize;
@@ -90,34 +90,34 @@
 }
 
 .finalMarkBadge {
-  background-color: #e6fffa;
-  color: #2f855a;
+  background-color: var(--bg);
+  color: var(--bg-button-form);
   padding: 4px 10px;
   border-radius: 4px;
   font-weight: 500;
-  border: 1px solid #b2f5ea;
+  border: 1px solid var(--border);
   display: inline-block;
   min-width: 24px;
 }
 
 .yearlyMarkBadge {
-  background-color: #ebf8ff;
-  color: #2b6cb0;
+  background-color: var(--bg);
+  color: var(--accent);
   padding: 6px 12px;
   border-radius: 4px;
   font-weight: bold;
-  border: 1px solid #bee3f8;
+  border: 1px solid var(--border);
   display: inline-block;
   min-width: 32px;
   font-size: 15px;
 }
 
 .empty {
-  color: #cbd5e0;
+  color: var(--bg-header);
 }
 
 .centered {
   text-align: center;
   padding: 40px;
-  color: #718096;
+  color: var(--text-secondary);
 }

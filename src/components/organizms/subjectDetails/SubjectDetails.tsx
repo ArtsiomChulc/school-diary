@@ -1,9 +1,9 @@
 import { type FC, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { userStore } from "../../../store/UserStore.ts";
-import s from "./SubjectDetails.module.css";
 import toast from "react-hot-toast";
 import { TrashIcon } from "lucide-react";
+import s from "./SubjectDetails.module.css";
 
 interface DetailsProps {
   subjectId: string;

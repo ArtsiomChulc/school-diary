@@ -8,7 +8,7 @@
 .backBtn {
   background: none;
   border: none;
-  color: #3182ce;
+  color: var(--accent);
   cursor: pointer;
   margin-bottom: 15px;
   padding: 0;
@@ -21,7 +21,7 @@
 
 .title {
   text-transform: capitalize;
-  color: #2d3748;
+  color: var(--text-main);
 }
 
 .tabs {
@@ -43,22 +43,22 @@
 }
 
 .tabBtnActive {
-  background-color: #3182ce;
-  color: #fff;
+  background-color: var(--accent-border);
+  color: var(--text-color-btn);
 }
 
 .tabBtnInactive {
-  background-color: #edf2f7;
-  color: #4a5568;
+  background-color: var(--bg);
+  color: var(--text-color-btn);
 }
 
 .tabBtnInactive:hover {
-  background-color: #e2e8f0;
+  background-color: var(--hover-tr);
 }
 
 .detailsCard {
-  background: #fff;
-  border: 1px solid #e2e8f0;
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 24px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -74,23 +74,20 @@
 .markBadge {
   display: flex;
   align-items: center;
-  background-color: #ebf8ff;
-  color: #2b6cb0;
+  background-color: var(--bg);
+  color: var(--accent);
   padding: 8px 8px 8px 14px;
+  border: 1px solid var(--border);
   border-radius: 4px;
   font-weight: bold;
   font-size: 16px;
   gap: 6px;
 }
 
-.markBadge > span {
-  font-size: 16px;
-}
-
 .deleteMarkBtn {
   background: none;
   border: none;
-  color: #e53e3e;
+  color: var(--danger);
   cursor: pointer;
   font-size: 18px;
   padding: 4px;
@@ -103,11 +100,15 @@
 }
 
 .deleteMarkBtn:hover {
-  background-color: #fed7d7;
+  background-color: var(--hover-tr);
+}
+
+.markBadge > span {
+  font-size: 16px;
 }
 
 .emptyMarks {
-  color: #a0aec0;
+  color: var(--border);
 }
 
 .finalMarkWrapper {
@@ -115,7 +116,7 @@
 }
 
 .finalMarkText {
-  color: #2f855a;
+  color: var(--bg-button-form);
   font-weight: bold;
   font-size: 18px;
 }
@@ -125,8 +126,8 @@
 }
 
 .addBtn {
-  background-color: var(--accent);
-  color: #fff;
+  background-color: var(--bg-button-form);
+  color: var(--bg);
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
@@ -135,11 +136,11 @@
 }
 
 .addBtn:hover {
-  background-color: #2b6cb0;
+  transform: scale(1.01);
 }
 
 .addBtn:disabled {
-  background-color: #cbd5e0;
+  background-color: var(--form-bg);
   cursor: not-allowed;
 }
 
@@ -169,7 +170,7 @@
 }
 
 .digitBtn:hover {
-  background-color: #e2e8f0;
+  background-color: var(--hover-tr);
 }
 
 .cancelBtn {
@@ -177,12 +178,12 @@
   margin-top: 12px;
   background: none;
   border: none;
-  color: #a0aec0;
+  color: var(--social-bg);
   cursor: pointer;
   font-size: 13px;
 }
 
 .cancelBtn:hover {
-  color: #718096;
+  color: var(--hover-tr);
   text-decoration: underline;
 }

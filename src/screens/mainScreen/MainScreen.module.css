@@ -31,7 +31,7 @@
 }
 
 .calc_btn span {
-  font-size: 12px;
+  font-size: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,6 +50,12 @@
 
 .calc_btn_active:hover {
   background-color: #2d3748;
+}
+
+.theme_toggle_btn {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 /* Стили для сообщений загрузки */
