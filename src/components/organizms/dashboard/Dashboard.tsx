@@ -11,11 +11,12 @@ interface DashboardProps {
 
 export const Dashboard: FC<DashboardProps> = observer(
   ({ externalView, setExternalView }) => {
-    const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
-      null,
-    );
+    const [selectedSubjectId, setSelectedSubjectId] =
+      useState<string | null>(null);
 
-    const [subView, setSubView] = useState<"table" | "details">("table");
+    const [subView, setSubView] = useState<
+      "table" | "details"
+    >("table");
 
     useEffect(() => {
       if (externalView === "calculator") {
@@ -36,7 +37,11 @@ export const Dashboard: FC<DashboardProps> = observer(
     };
 
     if (externalView === "calculator") {
-      return <GradeCalculator onBack={() => setExternalView("diary")} />;
+      return (
+        <GradeCalculator
+          onBack={() => setExternalView("diary")}
+        />
+      );
     }
 
     if (subView === "details" && selectedSubjectId) {
@@ -48,6 +53,10 @@ export const Dashboard: FC<DashboardProps> = observer(
       );
     }
 
-    return <SubjectsTable onSelectSubject={handleSelectSubject} />;
+    return (
+      <SubjectsTable
+        onSelectSubject={handleSelectSubject}
+      />
+    );
   },
 );

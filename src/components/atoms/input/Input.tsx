@@ -1,4 +1,7 @@
-import { type InputHTMLAttributes, type ReactNode } from "react";
+import {
+  type InputHTMLAttributes,
+  type ReactNode,
+} from "react";
 import s from "./Input.module.css";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -6,7 +9,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon: ReactNode;
 }
 
-export const Input = ({ label, icon, id, ...props }: InputProps) => {
+export const Input = ({
+  label,
+  icon,
+  id,
+  ...props
+}: InputProps) => {
   return (
     <div className={s.inputWrapper}>
       <label htmlFor={id} className={s.label}>
@@ -16,7 +24,11 @@ export const Input = ({ label, icon, id, ...props }: InputProps) => {
       <div className={s.inputContainer}>
         <div className={s.iconWrapper}>{icon}</div>
 
-        <input id={id} {...props} className={s.inputField} />
+        <input
+          id={id}
+          {...props}
+          className={s.inputField}
+        />
       </div>
     </div>
   );

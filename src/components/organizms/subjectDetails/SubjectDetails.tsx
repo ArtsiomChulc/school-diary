@@ -12,11 +12,17 @@ interface DetailsProps {
 
 export const SubjectDetails: FC<DetailsProps> = observer(
   ({ subjectId, onBack }) => {
-    const { profile, addMarkAndSave, deleteMarkAndSave, isLoading } = userStore;
+    const {
+      profile,
+      addMarkAndSave,
+      deleteMarkAndSave,
+      isLoading,
+    } = userStore;
     const [selectedTerm, setSelectedTerm] = useState<
       "term_1" | "term_2" | "term_3" | "term_4"
     >("term_1");
-    const [showMarkSelector, setShowMarkSelector] = useState(false);
+    const [showMarkSelector, setShowMarkSelector] =
+      useState(false);
 
     if (!profile || !profile.subjects) return null;
 
@@ -26,20 +32,33 @@ export const SubjectDetails: FC<DetailsProps> = observer(
     const currentTermData = subject[selectedTerm];
 
     const handleAddMark = async (mark: number) => {
-      await addMarkAndSave(profile.uid, subjectId, selectedTerm, mark);
+      await addMarkAndSave(
+        profile.uid,
+        subjectId,
+        selectedTerm,
+        mark,
+      );
       setShowMarkSelector(false);
     };
 
     const handleDeleteMark = (index: number) => {
-      if (!currentTermData || !currentTermData.marks) return;
+      if (!currentTermData || !currentTermData.marks)
+        return;
 
       const deletedMark = currentTermData.marks[index];
 
-      deleteMarkAndSave(profile.uid, subjectId, selectedTerm, index);
+      deleteMarkAndSave(
+        profile.uid,
+        subjectId,
+        selectedTerm,
+        index,
+      );
 
       toast(
         (t) => (
-          <span style={{ fontSize: "14px", color: "#2d3748" }}>
+          <span
+            style={{ fontSize: "14px", color: "#2d3748" }}
+          >
             Оценка <b>{deletedMark}</b> удалена.
             <button
               onClick={async () => {
@@ -82,7 +101,14 @@ export const SubjectDetails: FC<DetailsProps> = observer(
         <h2 className={s.title}>{subject.name}</h2>
 
         <div className={s.tabs}>
-          {(["term_1", "term_2", "term_3", "term_4"] as const).map((key) => (
+          {(
+            [
+              "term_1",
+              "term_2",
+              "term_3",
+              "term_4",
+            ] as const
+          ).map((key) => (
             <button
               key={key}
               onClick={() => {
@@ -105,7 +131,8 @@ export const SubjectDetails: FC<DetailsProps> = observer(
         <div className={s.detailsCard}>
           <h3>Текущие оценки:</h3>
           <div className={s.marksContainer}>
-            {currentTermData?.marks && currentTermData.marks.length > 0 ? (
+            {currentTermData?.marks &&
+            currentTermData.marks.length > 0 ? (
               currentTermData.marks.map((m, idx) => (
                 <div key={idx} className={s.markBadge}>
                   <span>{m}</span>
@@ -120,14 +147,17 @@ export const SubjectDetails: FC<DetailsProps> = observer(
                 </div>
               ))
             ) : (
-              <span className={s.emptyMarks}>Оценок пока нет</span>
+              <span className={s.emptyMarks}>
+                Оценок пока нет
+              </span>
             )}
           </div>
 
           <div className={s.finalMarkWrapper}>
             <strong>Итоговая оценка за четверть: </strong>
             <span className={s.finalMarkText}>
-              {currentTermData?.finalMark ?? "не выставлена"}
+              {currentTermData?.finalMark ??
+                "не выставлена"}
             </span>
           </div>
 
@@ -142,17 +172,21 @@ export const SubjectDetails: FC<DetailsProps> = observer(
               </button>
             ) : (
               <div>
-                <p className={s.selectorTitle}>Выберите балл:</p>
+                <p className={s.selectorTitle}>
+                  Выберите балл:
+                </p>
                 <div className={s.digitsGrid}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                    <button
-                      key={num}
-                      onClick={() => handleAddMark(num)}
-                      className={s.digitBtn}
-                    >
-                      {num}
-                    </button>
-                  ))}
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(
+                    (num) => (
+                      <button
+                        key={num}
+                        onClick={() => handleAddMark(num)}
+                        className={s.digitBtn}
+                      >
+                        {num}
+                      </button>
+                    ),
+                  )}
                 </div>
                 <button
                   onClick={() => setShowMarkSelector(false)}

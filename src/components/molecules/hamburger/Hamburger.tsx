@@ -5,7 +5,10 @@ interface HamburgerProps {
   onToggle: () => void;
 }
 
-export const Hamburger = ({ isOpen, onToggle }: HamburgerProps) => {
+export const Hamburger = ({
+  isOpen,
+  onToggle,
+}: HamburgerProps) => {
   return (
     <button
       className={`${s.hamburger} ${isOpen ? s.active : ""}`}

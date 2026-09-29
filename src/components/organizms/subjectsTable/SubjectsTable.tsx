@@ -13,19 +13,22 @@ export const SubjectsTable: FC<MainTableProps> = observer(
     const { profile, isLoading } = userStore;
 
     if (isLoading)
-      return <div className={s.centered}>Загрузка дневника...</div>;
+      return (
+        <div className={s.centered}>
+          Загрузка дневника...
+        </div>
+      );
     if (!profile || !profile.subjects)
       return <div className={s.centered}>Нет данных</div>;
 
     const subjectsList = Object.values(profile.subjects);
-    const terms: ("term_1" | "term_2" | "term_3" | "term_4")[] = [
-      "term_1",
-      "term_2",
-      "term_3",
-      "term_4",
-    ];
+    const terms: (
+      "term_1" | "term_2" | "term_3" | "term_4"
+    )[] = ["term_1", "term_2", "term_3", "term_4"];
 
-    const calculateYearlyMark = (subject: ISubject): number | string => {
+    const calculateYearlyMark = (
+      subject: ISubject,
+    ): number | string => {
       const finalMarks: number[] = [];
 
       terms.forEach((termKey) => {
@@ -37,7 +40,10 @@ export const SubjectsTable: FC<MainTableProps> = observer(
 
       if (finalMarks.length === 0) return "—";
 
-      const sum = finalMarks.reduce((acc, val) => acc + val, 0);
+      const sum = finalMarks.reduce(
+        (acc, val) => acc + val,
+        0,
+      );
       const average = sum / finalMarks.length;
 
       return Math.round(average);
@@ -46,11 +52,12 @@ export const SubjectsTable: FC<MainTableProps> = observer(
     return (
       <div className={s.container}>
         <h2 className={s.title}>
-          Электронный дневник: {profile.name} {profile.class} класс
+          Электронный дневник: {profile.name}{" "}
+          {profile.class} класс
         </h2>
         <p className={s.description}>
-          💡 Нажмите на название предмета, чтобы посмотреть текущие оценки или
-          выставить новые.
+          💡 Нажмите на название предмета, чтобы посмотреть
+          текущие оценки или выставить новые.
         </p>
 
         <div className={s.tableWrapper}>
@@ -67,27 +74,39 @@ export const SubjectsTable: FC<MainTableProps> = observer(
             </thead>
             <tbody>
               {subjectsList.map((subject: ISubject) => {
-                const yearlyMark = calculateYearlyMark(subject);
+                const yearlyMark =
+                  calculateYearlyMark(subject);
 
                 return (
                   <tr key={subject.id} className={s.tr}>
                     <td
                       className={s.tdName}
-                      onClick={() => onSelectSubject(subject.id)}
+                      onClick={() =>
+                        onSelectSubject(subject.id)
+                      }
                     >
                       {subject.name}
                     </td>
 
                     {terms.map((termKey) => {
-                      const finalMark = subject[termKey]?.finalMark;
+                      const finalMark =
+                        subject[termKey]?.finalMark;
                       return (
-                        <td key={termKey} className={s.tdMark}>
-                          {finalMark !== undefined && finalMark !== null ? (
-                            <span className={s.finalMarkBadge}>
+                        <td
+                          key={termKey}
+                          className={s.tdMark}
+                        >
+                          {finalMark !== undefined &&
+                          finalMark !== null ? (
+                            <span
+                              className={s.finalMarkBadge}
+                            >
                               {finalMark}
                             </span>
                           ) : (
-                            <span className={s.empty}>—</span>
+                            <span className={s.empty}>
+                              —
+                            </span>
                           )}
                         </td>
                       );
@@ -95,9 +114,13 @@ export const SubjectsTable: FC<MainTableProps> = observer(
 
                     <td className={s.tdMark}>
                       {typeof yearlyMark === "number" ? (
-                        <span className={s.yearlyMarkBadge}>{yearlyMark}</span>
+                        <span className={s.yearlyMarkBadge}>
+                          {yearlyMark}
+                        </span>
                       ) : (
-                        <span className={s.empty}>{yearlyMark}</span>
+                        <span className={s.empty}>
+                          {yearlyMark}
+                        </span>
                       )}
                     </td>
                   </tr>

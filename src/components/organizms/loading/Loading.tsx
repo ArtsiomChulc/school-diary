@@ -5,12 +5,16 @@ interface LoadingProps {
   message?: string;
 }
 
-export const Loading: FC<LoadingProps> = ({ message = "Идет урок..." }) => {
+export const Loading: FC<LoadingProps> = ({
+  message = "Идет урок...",
+}) => {
   const [dots, setDots] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDots((prev) => (prev.length < 3 ? prev + "." : ""));
+      setDots((prev) =>
+        prev.length < 3 ? prev + "." : "",
+      );
     }, 500);
     return () => clearInterval(interval);
   }, []);

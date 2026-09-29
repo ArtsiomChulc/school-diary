@@ -3,29 +3,44 @@ import { userStore } from "../../store/UserStore.ts";
 import { Dashboard } from "../../components/organizms/dashboard/Dashboard.tsx";
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { Calculator, StepBack, SunMoon } from "lucide-react";
+import {
+  Calculator,
+  StepBack,
+  SunMoon,
+} from "lucide-react";
 import s from "./MainScreen.module.css";
 
 export const MainScreen = observer(() => {
-  const [view, setView] = useState<"diary" | "calculator">("diary");
+  const [view, setView] = useState<"diary" | "calculator">(
+    "diary",
+  );
 
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    const savedTheme = localStorage.getItem("app-theme");
-    if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
+  const [theme, setTheme] = useState<"light" | "dark">(
+    () => {
+      const savedTheme = localStorage.getItem("app-theme");
+      if (savedTheme === "light" || savedTheme === "dark")
+        return savedTheme;
 
-    // Фолбэк на системные настройки
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  });
+      return window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches
+        ? "dark"
+        : "light";
+    },
+  );
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute(
+      "data-theme",
+      theme,
+    );
     localStorage.setItem("app-theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setTheme((prev) =>
+      prev === "light" ? "dark" : "light",
+    );
   };
 
   const { profile } = userStore;
@@ -38,7 +53,10 @@ export const MainScreen = observer(() => {
     return <div>Пользователь не авторизован</div>;
   }
 
-  if (!profile.subjects || Object.keys(profile.subjects).length === 0) {
+  if (
+    !profile.subjects ||
+    Object.keys(profile.subjects).length === 0
+  ) {
     return <div>Список предметов пуст</div>;
   }
 
@@ -47,18 +65,28 @@ export const MainScreen = observer(() => {
       <header className={s.header}>
         <button
           onClick={() =>
-            setView(view === "calculator" ? "diary" : "calculator")
+            setView(
+              view === "calculator"
+                ? "diary"
+                : "calculator",
+            )
           }
           className={s.calc_btn}
         >
           {view === "calculator" ? (
             <span>
-              <StepBack size={34} color={"var(--text-main)"} />
+              <StepBack
+                size={34}
+                color={"var(--text-main)"}
+              />
               назад
             </span>
           ) : (
             <span>
-              <Calculator size={32} color={"var(--text-main)"} />
+              <Calculator
+                size={32}
+                color={"var(--text-main)"}
+              />
               калькулятор оценок
             </span>
           )}
@@ -73,19 +101,28 @@ export const MainScreen = observer(() => {
         </button>
 
         {/*<Hamburger isOpen={false} onToggle={() => {}}/>*/}
-        <NickNameIco fullName={profile?.name} role={profile?.role} />
+        <NickNameIco
+          fullName={profile?.name}
+          role={profile?.role}
+        />
       </header>
       <main className={s.main_content}>
         <div className={s.info_block}>
           <div className={s.info_block_text}>
-            <h1>Наглядное представление вашего прогресса.</h1>
+            <h1>
+              Наглядное представление вашего прогресса.
+            </h1>
             <p>
-              Ваш учебный процесс — всё четко и организовано. Вот что вас ждет в
-              этой учебной четверти.
+              Ваш учебный процесс — всё четко и
+              организовано. Вот что вас ждет в этой учебной
+              четверти.
             </p>
           </div>
           <div className={s.info_block_nav}>
-            <Dashboard externalView={view} setExternalView={setView} />
+            <Dashboard
+              externalView={view}
+              setExternalView={setView}
+            />
           </div>
         </div>
       </main>

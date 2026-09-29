@@ -33,9 +33,12 @@ export const SignIn = () => {
           Ваша история обучения начинается здесь.
         </h3>
         <p className={s.signin_subtitle}>
-          Войдите в систему, чтобы следить за своей успеваемостью
+          Войдите в систему, чтобы следить за своей
+          успеваемостью
         </p>
-        {authError && <div className={s.error_login}>{authError}</div>}
+        {authError && (
+          <div className={s.error_login}>{authError}</div>
+        )}
         <form onSubmit={handleSubmit} className={s.form}>
           <Input
             id="email"
