@@ -19,11 +19,6 @@
   text-decoration: underline;
 }
 
-.title {
-  text-transform: capitalize;
-  color: var(--text-main);
-}
-
 .tabs {
   display: flex;
   gap: 8px;
@@ -49,7 +44,7 @@
 
 .tabBtnInactive {
   background-color: var(--bg);
-  color: var(--text-color-btn);
+  color: var(--text-secondary);
 }
 
 .tabBtnInactive:hover {
@@ -103,22 +98,8 @@
   background-color: var(--hover-tr);
 }
 
-.markBadge > span {
-  font-size: 16px;
-}
-
-.emptyMarks {
-  color: var(--border);
-}
-
 .finalMarkWrapper {
   margin-top: 20px;
-}
-
-.finalMarkText {
-  color: var(--bg-button-form);
-  font-weight: bold;
-  font-size: 18px;
 }
 
 .addMarkSection {
@@ -144,12 +125,6 @@
   cursor: not-allowed;
 }
 
-.selectorTitle {
-  font-size: 14px;
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-
 .digitsGrid {
   display: flex;
   gap: 8px;
@@ -160,7 +135,7 @@
   width: 40px;
   height: 40px;
   background-color: var(--bg);
-  border: none;
+  border: 1px solid var(--border);
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
@@ -175,12 +150,15 @@
 
 .cancelBtn {
   display: block;
-  margin-top: 12px;
-  background: none;
+  margin: 12px auto 0;
+  background: var(--bg-button-form);
   border: none;
   color: var(--social-bg);
   cursor: pointer;
-  font-size: 13px;
+  font-size: 14px;
+  border-radius: 4px;
+  padding-block: 8px;
+  padding-inline: 14px;
 }
 
 .cancelBtn:hover {

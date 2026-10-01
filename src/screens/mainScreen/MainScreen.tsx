@@ -1,13 +1,16 @@
 import { NickNameIco } from "../../components/atoms/nickNameIco/NickNameIco.tsx";
 import { userStore } from "../../store/UserStore.ts";
 import { Dashboard } from "../../components/organizms/dashboard/Dashboard.tsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { observer } from "mobx-react-lite";
 import {
   Calculator,
   StepBack,
   SunMoon,
 } from "lucide-react";
+import { Text } from "../../components/atoms/text/Text.tsx";
+import { Button } from "../../components/atoms/button/Button.tsx";
+import useTheme from "../../hooks/useTheme.ts";
 import s from "./MainScreen.module.css";
 
 export const MainScreen = observer(() => {
@@ -15,33 +18,7 @@ export const MainScreen = observer(() => {
     "diary",
   );
 
-  const [theme, setTheme] = useState<"light" | "dark">(
-    () => {
-      const savedTheme = localStorage.getItem("app-theme");
-      if (savedTheme === "light" || savedTheme === "dark")
-        return savedTheme;
-
-      return window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches
-        ? "dark"
-        : "light";
-    },
-  );
-
-  useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      theme,
-    );
-    localStorage.setItem("app-theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) =>
-      prev === "light" ? "dark" : "light",
-    );
-  };
+  const { toggleTheme } = useTheme();
 
   const { profile } = userStore;
   //todo delete code
@@ -50,20 +27,28 @@ export const MainScreen = observer(() => {
 
   // }
   if (!profile) {
-    return <div>Пользователь не авторизован</div>;
+    return (
+      <Text as={"p"} weight={500} size={"large"}>
+        Пользователь не авторизован
+      </Text>
+    );
   }
 
   if (
     !profile.subjects ||
     Object.keys(profile.subjects).length === 0
   ) {
-    return <div>Список предметов пуст</div>;
+    return (
+      <Text as={"p"} weight={500} size={"large"}>
+        Список предметов пуст
+      </Text>
+    );
   }
 
   return (
     <div className={s.main_screen}>
       <header className={s.header}>
-        <button
+        <Button
           onClick={() =>
             setView(
               view === "calculator"
@@ -71,34 +56,37 @@ export const MainScreen = observer(() => {
                 : "calculator",
             )
           }
-          className={s.calc_btn}
+          className={s.header_btn}
         >
           {view === "calculator" ? (
-            <span>
+            <Text as={"span"}>
               <StepBack
                 size={34}
                 color={"var(--text-main)"}
               />
               назад
-            </span>
+            </Text>
           ) : (
-            <span>
+            <Text as={"span"}>
               <Calculator
                 size={32}
                 color={"var(--text-main)"}
               />
               калькулятор оценок
-            </span>
+            </Text>
           )}
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={toggleTheme}
-          className={s.theme_toggle_btn}
+          className={s.header_btn}
           title="Сменить тему"
         >
-          <SunMoon size={28} color={"var(--text-main)"} />
-        </button>
+          <Text as={"span"}>
+            <SunMoon size={28} color={"var(--text-main)"} />
+            сменить тему
+          </Text>
+        </Button>
 
         {/*<Hamburger isOpen={false} onToggle={() => {}}/>*/}
         <NickNameIco
@@ -109,14 +97,25 @@ export const MainScreen = observer(() => {
       <main className={s.main_content}>
         <div className={s.info_block}>
           <div className={s.info_block_text}>
-            <h1>
+            <Text
+              as={"h1"}
+              size={"large"}
+              align={"center"}
+              color={"var(--text-main)"}
+              weight={600}
+            >
               Наглядное представление вашего прогресса.
-            </h1>
-            <p>
+            </Text>
+            <Text
+              as={"p"}
+              size={"sm"}
+              align={"center"}
+              color={"var(--text-secondary)"}
+            >
               Ваш учебный процесс — всё четко и
               организовано. Вот что вас ждет в этой учебной
               четверти.
-            </p>
+            </Text>
           </div>
           <div className={s.info_block_nav}>
             <Dashboard

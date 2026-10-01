@@ -3,6 +3,8 @@ import { observer } from "mobx-react-lite";
 import { userStore } from "../../../store/UserStore.ts";
 import toast from "react-hot-toast";
 import { TrashIcon } from "lucide-react";
+import { Text } from "../../atoms/text/Text.tsx";
+import { Button } from "../../atoms/button/Button.tsx";
 import s from "./SubjectDetails.module.css";
 
 interface DetailsProps {
@@ -56,11 +58,9 @@ export const SubjectDetails: FC<DetailsProps> = observer(
 
       toast(
         (t) => (
-          <span
-            style={{ fontSize: "14px", color: "#2d3748" }}
-          >
+          <Text color={"var(--text-main)"}>
             Оценка <b>{deletedMark}</b> удалена.
-            <button
+            <Button
               onClick={async () => {
                 await addMarkAndSave(
                   profile.uid,
@@ -83,8 +83,8 @@ export const SubjectDetails: FC<DetailsProps> = observer(
               }}
             >
               Отменить
-            </button>
-          </span>
+            </Button>
+          </Text>
         ),
         {
           duration: 6000,
@@ -95,10 +95,19 @@ export const SubjectDetails: FC<DetailsProps> = observer(
 
     return (
       <div className={s.container}>
-        <button onClick={onBack} className={s.backBtn}>
+        <Button onClick={onBack} className={s.backBtn}>
           ← Назад в дневник
-        </button>
-        <h2 className={s.title}>{subject.name}</h2>
+        </Button>
+        <Text
+          as={"h2"}
+          color={"var(--text-main)"}
+          style={{
+            textTransform: "capitalize",
+            paddingBottom: "16px",
+          }}
+        >
+          {subject.name}
+        </Text>
 
         <div className={s.tabs}>
           {(
@@ -109,7 +118,7 @@ export const SubjectDetails: FC<DetailsProps> = observer(
               "term_4",
             ] as const
           ).map((key) => (
-            <button
+            <Button
               key={key}
               onClick={() => {
                 setSelectedTerm(key);
@@ -124,77 +133,96 @@ export const SubjectDetails: FC<DetailsProps> = observer(
                   : key === "term_3"
                     ? "III ч."
                     : "IV ч."}
-            </button>
+            </Button>
           ))}
         </div>
 
         <div className={s.detailsCard}>
-          <h3>Текущие оценки:</h3>
+          <Text as={"h3"} color={"var(--text-main)"}>
+            Текущие оценки:
+          </Text>
           <div className={s.marksContainer}>
             {currentTermData?.marks &&
             currentTermData.marks.length > 0 ? (
-              currentTermData.marks.map((m, idx) => (
+              currentTermData.marks.map((mark, idx) => (
                 <div key={idx} className={s.markBadge}>
-                  <span>{m}</span>
-                  <button
+                  <Text as={"span"} size={"md"}>
+                    {mark}
+                  </Text>
+                  <Button
                     onClick={() => handleDeleteMark(idx)}
                     disabled={isLoading}
                     className={s.deleteMarkBtn}
                     title="Удалить оценку"
                   >
                     {<TrashIcon size={18} />}
-                  </button>
+                  </Button>
                 </div>
               ))
             ) : (
-              <span className={s.emptyMarks}>
+              <Text
+                className={s.emptyMarks}
+                as={"span"}
+                color={"var(--text-secondary)"}
+              >
                 Оценок пока нет
-              </span>
+              </Text>
             )}
           </div>
 
           <div className={s.finalMarkWrapper}>
-            <strong>Итоговая оценка за четверть: </strong>
-            <span className={s.finalMarkText}>
+            <Text as={"strong"}>
+              Итоговая оценка за четверть:{" "}
+            </Text>
+            <Text
+              as={"span"}
+              color={"var(--bg-button-form)"}
+              size={"lg"}
+              weight={600}
+            >
               {currentTermData?.finalMark ??
                 "не выставлена"}
-            </span>
+            </Text>
           </div>
 
           <div className={s.addMarkSection}>
             {!showMarkSelector ? (
-              <button
+              <Button
                 onClick={() => setShowMarkSelector(true)}
                 disabled={isLoading}
                 className={s.addBtn}
               >
                 + Добавить оценку
-              </button>
+              </Button>
             ) : (
-              <div>
-                <p className={s.selectorTitle}>
+              <>
+                <Text
+                  as={"p"}
+                  weight={500}
+                  style={{ marginBottom: "8px" }}
+                >
                   Выберите балл:
-                </p>
+                </Text>
                 <div className={s.digitsGrid}>
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(
                     (num) => (
-                      <button
+                      <Button
                         key={num}
                         onClick={() => handleAddMark(num)}
                         className={s.digitBtn}
                       >
                         {num}
-                      </button>
+                      </Button>
                     ),
                   )}
                 </div>
-                <button
+                <Button
                   onClick={() => setShowMarkSelector(false)}
                   className={s.cancelBtn}
                 >
                   Отмена
-                </button>
-              </div>
+                </Button>
+              </>
             )}
           </div>
         </div>

@@ -3,11 +3,11 @@
   max-width: 250px;
   border: 1px solid #ded2c3;
   border-radius: 18px;
-  padding: 10px;
+  padding: 8px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   margin-left: auto;
 }
 
@@ -32,13 +32,13 @@
   line-height: 1.2;
 }
 
-.full_name span:nth-child(1) {
-  font-size: 12px;
+.full_name span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 130px;
+  width: 100px;
 }
+
 
 .full_name span:nth-child(2) {
   color: var(--text-secondary);

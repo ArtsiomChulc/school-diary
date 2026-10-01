@@ -1,6 +1,7 @@
 import s from "./NickNameIco.module.css";
 import { LogOut } from "lucide-react";
 import { userStore } from "../../../store/UserStore.ts";
+import { Text } from "../text/Text.tsx";
 
 interface NickNameIco {
   fullName?: string;
@@ -26,8 +27,20 @@ export const NickNameIco = ({
     <div className={s.nick_name_wrap}>
       <div className={s.inside_circle}>{initials}</div>
       <div className={s.full_name}>
-        <span>{fullName}</span>
-        <span>{role}</span>
+        <Text
+          as={"span"}
+          size={"md"}
+          color={"var(--text-main)"}
+        >
+          {fullName}
+        </Text>
+        <Text
+          as={"span"}
+          size={"sm"}
+          color={"var(--text-secondary)"}
+        >
+          {role}
+        </Text>
       </div>
       <div className={s.logout_icon} onClick={handleLogout}>
         <LogOut size={26} strokeWidth={1.8} />

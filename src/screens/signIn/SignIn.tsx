@@ -59,11 +59,9 @@ export const SignIn = () => {
             disabled={isLoading}
             required
           />
-          <Button
-            text={isLoading ? "Вход..." : "Войти"}
-            type={"submit"}
-            disabled={isLoading}
-          />
+          <Button type={"submit"} disabled={isLoading}>
+            {isLoading ? "Вход..." : "Войти"}
+          </Button>
         </form>
       </FormContainer>
     </div>

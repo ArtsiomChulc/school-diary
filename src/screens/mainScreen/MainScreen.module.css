@@ -7,7 +7,7 @@
 .header {
   width: 100%;
   min-height: 80px;
-  border-bottom: 0.8px solid #ded2c3;
+  border-bottom: 0.8px solid var(--border);
   backdrop-filter: blur(12px);
   background: var(--bg-header);
   padding: 10px;
@@ -16,7 +16,7 @@
   justify-content: space-between;
 }
 
-.calc_btn {
+.header_btn {
   border: none;
   padding: 8px 10px;
   border-radius: 6px;
@@ -30,7 +30,7 @@
   font-family: sans-serif;
 }
 
-.calc_btn span {
+.header_btn span {
   font-size: 10px;
   display: flex;
   align-items: center;
@@ -39,17 +39,8 @@
   flex-direction: column;
 }
 
-.calc_btn:active {
+.header_btn:active {
   transform: scale(0.98);
-}
-
-/* Активное состояние кнопки, когда калькулятор уже открыт */
-.calc_btn_active {
-  background-color: #4a5568;
-}
-
-.calc_btn_active:hover {
-  background-color: #2d3748;
 }
 
 .theme_toggle_btn {
@@ -62,7 +53,7 @@
 .centered {
   text-align: center;
   padding: 40px;
-  color: #718096;
+  color: var(--text-secondary);
   font-family: sans-serif;
 }
 
@@ -71,19 +62,11 @@
   padding-inline: 16px;
 }
 
-.main_content > .info_block > .info_block_text > h1 {
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 111%;
-  letter-spacing: -0.02em;
-  text-align: left;
-}
-
-.main_content > .info_block > .info_block_text > p {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 171%;
-  text-align: left;
+.info_block_text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-block: 20px;
 }
 
 .info_block_nav {
