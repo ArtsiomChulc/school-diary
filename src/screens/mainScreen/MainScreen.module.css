@@ -4,6 +4,51 @@
   margin: 0 auto;
 }
 
+.header {
+  width: 100%;
+  min-height: 80px;
+  border-bottom: 0.8px solid var(--border);
+  backdrop-filter: blur(12px);
+  background: var(--bg-header);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header_btn {
+  border: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: var(--text-main);
+  cursor: pointer;
+  font-weight: bold;
+  background-color: var(--bg);
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+  font-family: sans-serif;
+}
+
+.header_btn span {
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-direction: column;
+}
+
+.header_btn:active {
+  transform: scale(0.98);
+}
+
+.theme_toggle_btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 /* Стили для сообщений загрузки */
 .centered {
   text-align: center;
