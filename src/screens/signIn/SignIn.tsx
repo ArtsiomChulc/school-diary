@@ -5,11 +5,20 @@ import { LockOpen, Mail } from "lucide-react";
 import { Button } from "../../components/atoms/button/Button.tsx";
 import { type SyntheticEvent, useState } from "react";
 import { userStore } from "../../store/UserStore.ts";
+import { useLocation, useNavigate } from "react-router";
+import { observer } from "mobx-react-lite";
+import Loading from "../../components/organizms/loading/Loading.tsx";
 import s from "./SignIn.module.css";
 
-export const SignIn = () => {
+export const SignIn = observer(() => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const fromPage =
+    location.state?.from?.pathname || "/subjects";
 
   const { login, authError, isLoading } = userStore;
 
@@ -21,7 +30,12 @@ export const SignIn = () => {
     }
 
     await login(email, password);
+    navigate(fromPage, { replace: true });
   };
+
+  if (isLoading) {
+    return <Loading message={"Загрузка данных"} />;
+  }
 
   return (
     <div className={s.sign_in_wrapper}>
@@ -66,4 +80,4 @@ export const SignIn = () => {
       </FormContainer>
     </div>
   );
-};
+});
