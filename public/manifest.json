@@ -1,0 +1,31 @@
+{
+  "short_name": "Дневник",
+  "name": "Электронный дневник",
+  "description": "Приложение для отслеживания успеваемости учащихся",
+  "categories": ["education", "productivity"],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#121212",
+  "theme_color": "#0d4223",
+  "icons": [
+    {
+      "src": "/android-diary.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-diary.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-diary.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ]
+}
