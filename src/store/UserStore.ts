@@ -272,7 +272,7 @@ class UserStore {
             `📚 Предмет: <b>${subjectName}</b>\n` +
             `📅 Четверть: <b>${termNames[termKey]}</b>\n` +
             `💯 Оценка: <b>${newMark}</b>\n\n` +
-            `⏰ <i>Добавлено: ${formattedDateTime}</i>` +
+            `⏰ <i>Добавлено: ${formattedDateTime}</i>\n` +
             `👤 Добавил: <b>${this.profile.name}</b>`;
 
           await this.sendTelegramNotification(
@@ -424,7 +424,7 @@ class UserStore {
             `📚 Предмет: <b>${subjectName}</b>\n` +
             `📅 Четверть: <b>${termNames[termKey]}</b>\n` +
             `❌ Удалена оценка: <b>${deletedMark}</b>\n\n` +
-            `⏰ <i>Время удаления: ${formattedDateTime}</i>` +
+            `⏰ <i>Время удаления: ${formattedDateTime}</i>\n` +
             `👤 Удалил: <b>${this.profile.name}</b>`;
 
           await this.sendTelegramNotification(
