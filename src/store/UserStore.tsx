@@ -35,7 +35,7 @@ export interface IStudentProfile {
   email: string;
   role: string;
   class?: string;
-  createdAt: any;
+  createdAt: Date;
   subjects?: Record<string, ISubject>;
   telegramChatIds: string | string[];
 }
@@ -46,7 +46,7 @@ export interface IParentProfile {
   name: string;
   email: string;
   role: string;
-  createdAt: any;
+  createdAt: Date;
   children: string[]; // Массив UID детей
 }
 
