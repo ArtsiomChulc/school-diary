@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { userStore } from "../../../store/UserStore.ts";
+import { userStore } from "../../../store/UserStore.tsx";
 import type { ISubject } from "../../../store/UserStore.ts";
 import type { FC } from "react";
 import s from "./SubjectsTable.module.css";

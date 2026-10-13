@@ -1,6 +1,6 @@
 import { type FC, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { userStore } from "../../../store/UserStore.ts";
+import { userStore } from "../../../store/UserStore.tsx";
 import toast from "react-hot-toast";
 import { TrashIcon } from "lucide-react";
 import { Text } from "../../atoms/text/Text.tsx";

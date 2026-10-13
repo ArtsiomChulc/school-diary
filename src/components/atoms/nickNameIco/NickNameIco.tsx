@@ -1,6 +1,6 @@
 import s from "./NickNameIco.module.css";
 import { LogOut } from "lucide-react";
-import { userStore } from "../../../store/UserStore.ts";
+import { userStore } from "../../../store/UserStore.tsx";
 import { Text } from "../text/Text.tsx";
 
 interface NickNameIco {

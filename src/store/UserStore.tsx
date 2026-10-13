@@ -28,20 +28,33 @@ export interface ISubject {
   term_4?: ITermMarks;
 }
 
-interface UserProfile {
+// Интерфейс профиля ученика
+export interface IStudentProfile {
   uid: string;
   name: string;
   email: string;
   role: string;
   class?: string;
-  createdAt: Date;
+  createdAt: any;
   subjects?: Record<string, ISubject>;
-  telegramChatIds: string;
+  telegramChatIds: string | string[];
+}
+
+// Интерфейс профиля родителя
+export interface IParentProfile {
+  uid: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: any;
+  children: string[]; // Массив UID детей
 }
 
 class UserStore {
   user: FirebaseUser | null = null;
-  profile: UserProfile | null = null;
+  currentUserProfile:
+    IStudentProfile | IParentProfile | null = null; // Кто залогинен (Родитель или Ученик)
+  profile: IStudentProfile | null = null; // Чей дневник открыт (например, Стефания)
   isLoading: boolean = true;
   authError: string | null = null;
 
@@ -62,6 +75,7 @@ class UserStore {
       } else {
         runInAction(() => {
           this.user = null;
+          this.currentUserProfile = null;
           this.profile = null;
           this.isLoading = false;
         });
@@ -71,48 +85,65 @@ class UserStore {
 
   private async fetchUserProfile(uid: string) {
     try {
-      const docRef = doc(db, "users", uid);
-      const docSnap = await getDoc(docRef);
+      // 1. Проверяем, есть ли пользователь в коллекции учеников (users)
+      const userDocRef = doc(db, "users", uid);
+      const userDocSnap = await getDoc(userDocRef);
 
-      if (docSnap.exists()) {
-        const userData = docSnap.data() as UserProfile;
-
-        const subjectsCollRef = collection(
-          db,
-          "users",
-          uid,
-          "subjects",
-        );
-        const subjectsSnap = await getDocs(subjectsCollRef);
-
-        const subjectsMap: Record<string, ISubject> = {};
-
-        subjectsSnap.forEach((subjectDoc) => {
-          subjectsMap[subjectDoc.id] = {
-            id: subjectDoc.id,
-            ...subjectDoc.data(),
-          } as ISubject;
-        });
+      if (userDocSnap.exists()) {
+        const userData =
+          userDocSnap.data() as IStudentProfile;
+        const subjectsMap =
+          await this.fetchStudentSubjects(uid);
 
         runInAction(() => {
-          this.profile = {
+          this.currentUserProfile = {
             ...userData,
             subjects: subjectsMap,
           };
+          this.profile = this
+            .currentUserProfile as IStudentProfile; // У ученика профили совпадают
           this.isLoading = false;
         });
-      } else {
-        toast.error(
-          "Документ пользователя не найден в Firestore",
-        );
-        console.error(
-          "Документ пользователя не найден в Firestore",
-        );
-        runInAction(() => {
-          this.profile = null;
-          this.isLoading = false;
-        });
+        return;
       }
+
+      // 2. Если в учениках нет, ищем в коллекции родителей (parents)
+      const parentDocRef = doc(db, "parents", uid);
+      const parentDocSnap = await getDoc(parentDocRef);
+
+      if (parentDocSnap.exists()) {
+        const parentData =
+          parentDocSnap.data() as IParentProfile;
+
+        runInAction(() => {
+          this.currentUserProfile = parentData;
+        });
+
+        // Автоматически подгружаем дневник первого ребенка из массива children, если он есть
+        if (
+          parentData.children &&
+          parentData.children.length > 0
+        ) {
+          await this.loadStudentProfile(
+            parentData.children[0],
+          );
+        } else {
+          runInAction(() => {
+            this.isLoading = false;
+          });
+        }
+        return;
+      }
+
+      // 3. Если нигде не нашли
+      toast.error(
+        "Документ пользователя не найден в Firestore",
+      );
+      runInAction(() => {
+        this.currentUserProfile = null;
+        this.profile = null;
+        this.isLoading = false;
+      });
     } catch (error) {
       toast.error("Ошибка при получении профиля");
       console.error("Ошибка при получении профиля:", error);
@@ -121,6 +152,71 @@ class UserStore {
       });
     }
   }
+
+  // Вспомогательный метод для загрузки подколлекции предметов конкретного ученика
+  private async fetchStudentSubjects(
+    studentUid: string,
+  ): Promise<Record<string, ISubject>> {
+    const subjectsCollRef = collection(
+      db,
+      "users",
+      studentUid,
+      "subjects",
+    );
+    const subjectsSnap = await getDocs(subjectsCollRef);
+    const subjectsMap: Record<string, ISubject> = {};
+
+    subjectsSnap.forEach((subjectDoc) => {
+      subjectsMap[subjectDoc.id] = {
+        id: subjectDoc.id,
+        ...subjectDoc.data(),
+      } as ISubject;
+    });
+
+    return subjectsMap;
+  }
+
+  /**
+   * Метод для явного переключения/загрузки дневника конкретного ребенка (нужен для UI родителей)
+   */
+  loadStudentProfile = async (studentUid: string) => {
+    try {
+      runInAction(() => {
+        this.isLoading = true;
+      });
+
+      const studentDocRef = doc(db, "users", studentUid);
+      const studentDocSnap = await getDoc(studentDocRef);
+
+      if (studentDocSnap.exists()) {
+        const studentData =
+          studentDocSnap.data() as IStudentProfile;
+        const subjectsMap =
+          await this.fetchStudentSubjects(studentUid);
+
+        runInAction(() => {
+          this.profile = {
+            ...studentData,
+            subjects: subjectsMap,
+          };
+          this.isLoading = false;
+        });
+      } else {
+        toast.error("Документ ребенка не найден");
+        runInAction(() => {
+          this.isLoading = false;
+        });
+      }
+    } catch (error) {
+      console.error(
+        "Ошибка при загрузке профиля ребенка:",
+        error,
+      );
+      runInAction(() => {
+        this.isLoading = false;
+      });
+    }
+  };
 
   private sendTelegramNotification = async (
     chatId: string | string[],
@@ -132,48 +228,34 @@ class UserStore {
 
     if (!BOT_TOKEN) {
       toast.error(
-        "Критическая ошибка: Токен Telegram бота не найден в переменных .env!",
-      );
-      console.error(
-        "Критическая ошибка: Токен Telegram бота не найден в переменных .env!",
+        "Критическая ошибка: Токен Telegram не найден в .env!",
       );
       return;
     }
 
-    const action = `/bot${BOT_TOKEN}/sendMessage`;
-    const cleanText = text.replace(/<\/?[^>]+(>|\$)/g, "");
-
-    // 1. Превращаем в массив
+    const action = "/bot" + BOT_TOKEN + "/sendMessage";
     const rawChatIds = Array.isArray(chatId)
       ? chatId
       : [chatId];
-
-    // 2. ЗАЩИТА: Фильтруем массив, оставляя только существующие строки/числа
     const chatIds = rawChatIds
       .filter(Boolean)
       .map((id) => String(id).trim());
 
     try {
-      // Формируем массив промисов только для валидных ID
       const requests = chatIds.map(async (trimmedId) => {
-        if (!trimmedId) return; // доп. подстраховка
+        if (!trimmedId) return;
 
         const url = new URL(base + action);
         url.searchParams.append("chat_id", trimmedId);
-        url.searchParams.append("text", cleanText);
+        url.searchParams.append("text", text);
+        url.searchParams.append("parse_mode", "HTML"); // Оставляем поддержку HTML-тегов для красоты
 
         return fetch(url.toString(), { mode: "no-cors" });
       });
 
-      // Ждем завершения всех запросов параллельно
       await Promise.all(requests);
-      toast.success(
-        `Уведомления успешно отправлены в Telegram`,
-      );
+      toast.success(`Уведомления отправлены в Telegram`);
     } catch (error) {
-      toast.error(
-        "Не удалось отправить сообщения в Telegram",
-      );
       console.error(
         "Не удалось отправить сообщения в Telegram:",
         error,
@@ -187,17 +269,13 @@ class UserStore {
     termKey: "term_1" | "term_2" | "term_3" | "term_4",
     newMark: number,
   ) => {
-    // Проверяем, авторизован ли пользователь в системе (зарегистрирован)
     if (
       !this.user ||
       !this.profile ||
-      !this.profile.subjects
+      !this.profile.subjects ||
+      !this.currentUserProfile
     ) {
       toast.error(
-        "Ошибка: Пользователь не авторизован или профиль не загружен.",
-        { duration: 3500 },
-      );
-      console.error(
         "Ошибка: Пользователь не авторизован или профиль не загружен.",
       );
       return;
@@ -220,15 +298,14 @@ class UserStore {
         newMark,
       ];
 
-      // 2. Рассчитываем средний балл
       const sum = updatedMarks.reduce(
         (acc, val) => acc + val,
         0,
       );
-      const average = sum / updatedMarks.length;
-      const calculatedFinalMark = Math.round(average);
+      const calculatedFinalMark = Math.round(
+        sum / updatedMarks.length,
+      );
 
-      // 3. Отправляем изменения в Firestore подколлекцию subjects
       const subjectDocRef = doc(
         db,
         "users",
@@ -242,6 +319,7 @@ class UserStore {
         [`${termKey}.finalMark`]: calculatedFinalMark,
       });
 
+      // 4. Отправка уведомления
       try {
         if (this.profile && this.profile.telegramChatIds) {
           const termNames = {
@@ -250,7 +328,6 @@ class UserStore {
             term_3: "III",
             term_4: "IV",
           };
-
           const now = new Date();
           const formattedDateTime = now.toLocaleString(
             "ru-RU",
@@ -266,6 +343,7 @@ class UserStore {
           const subjectName =
             this.profile.subjects[subjectId]?.name ||
             subjectId;
+          const authorName = this.currentUserProfile.name;
 
           const message =
             `➕ <b>Новая оценка!</b>\n\n` +
@@ -273,7 +351,7 @@ class UserStore {
             `📅 Четверть: <b>${termNames[termKey]}</b>\n` +
             `💯 Оценка: <b>${newMark}</b>\n\n` +
             `⏰ <i>Добавлено: ${formattedDateTime}</i>\n` +
-            `👤 Добавил: <b>${this.profile.name}</b>`;
+            `👤 Добавил(а): <b>${authorName}</b>`;
 
           await this.sendTelegramNotification(
             this.profile.telegramChatIds,
@@ -284,13 +362,9 @@ class UserStore {
         console.error("Ошибка при вызове уведомления:", e);
       }
 
-      // 4. Обновляем локальное состояние в MobX
+      // 5. Обновляем локальное состояние в MobX
       runInAction(() => {
-        if (
-          this.profile &&
-          this.profile.subjects &&
-          this.profile.subjects[subjectId]
-        ) {
+        if (this.profile?.subjects?.[subjectId]) {
           this.profile.subjects[subjectId][termKey] = {
             marks: updatedMarks,
             finalMark: calculatedFinalMark,
@@ -298,6 +372,7 @@ class UserStore {
         }
         this.isLoading = false;
       });
+
       toast.success(
         `Оценка ${newMark} успешно добавлена. Новый итог: ${calculatedFinalMark}`,
         { duration: 3000 },
@@ -320,12 +395,10 @@ class UserStore {
     if (
       !this.user ||
       !this.profile ||
-      !this.profile.subjects
+      !this.profile.subjects ||
+      !this.currentUserProfile
     ) {
       toast.error(
-        "Ошибка: Пользователь не авторизован или профиль не загружен.",
-      );
-      console.error(
         "Ошибка: Пользователь не авторизован или профиль не загружен.",
       );
       return;
@@ -339,19 +412,13 @@ class UserStore {
       const currentSubject =
         this.profile.subjects[subjectId];
       const currentTermData = currentSubject?.[termKey];
-
       if (!currentTermData || !currentTermData.marks)
         return;
-
-      // Получаем удаляемую оценку перед фильтрацией массива, чтобы указать её в уведомлении
+      // Получаем удаляемую оценку перед фильтрацией
       const deletedMark = currentTermData.marks[markIndex];
-
-      // 1. Создаем новый массив, исключая оценку по переданному индексу
       const updatedMarks = currentTermData.marks.filter(
         (_, idx) => idx !== markIndex,
       );
-
-      // 2. Пересчитываем итоговую оценку для нового массива
       let calculatedFinalMark: number | null = null;
       if (updatedMarks.length > 0) {
         const sum = updatedMarks.reduce(
@@ -362,8 +429,7 @@ class UserStore {
           sum / updatedMarks.length,
         );
       }
-
-      // 3. Ссылка на документ предмета в Firestore
+      // Ссылка строго на документ предмета ребенка
       const subjectDocRef = doc(
         db,
         "users",
@@ -371,20 +437,13 @@ class UserStore {
         "subjects",
         subjectId,
       );
-
-      // 4. Обновляем данные в Firestore
       await updateDoc(subjectDocRef, {
         [`${termKey}.marks`]: updatedMarks,
         [`${termKey}.finalMark`]: calculatedFinalMark,
       });
-
-      // 5. Синхронизируем локальное состояние MobX для мгновенного рендера в UI
+      // Синхронизируем локальное состояние MobX
       runInAction(() => {
-        if (
-          this.profile &&
-          this.profile.subjects &&
-          this.profile.subjects[subjectId]
-        ) {
+        if (this.profile?.subjects?.[subjectId]) {
           this.profile.subjects[subjectId][termKey] = {
             marks: updatedMarks,
             finalMark: calculatedFinalMark,
@@ -392,8 +451,7 @@ class UserStore {
         }
         this.isLoading = false;
       });
-
-      // 6. Отправка уведомления об удалении оценки в Telegram
+      // Отправка уведомления об удалении
       try {
         if (this.profile && this.profile.telegramChatIds) {
           const termNames = {
@@ -402,7 +460,6 @@ class UserStore {
             term_3: "III",
             term_4: "IV",
           };
-
           const now = new Date();
           const formattedDateTime = now.toLocaleString(
             "ru-RU",
@@ -414,19 +471,17 @@ class UserStore {
               minute: "2-digit",
             },
           );
-
           const subjectName =
             this.profile.subjects[subjectId]?.name ||
             subjectId;
-
+          const authorName = this.currentUserProfile.name;
           const message =
             `🗑️ <b>Оценка удалена!</b>\n\n` +
             `📚 Предмет: <b>${subjectName}</b>\n` +
             `📅 Четверть: <b>${termNames[termKey]}</b>\n` +
             `❌ Удалена оценка: <b>${deletedMark}</b>\n\n` +
             `⏰ <i>Время удаления: ${formattedDateTime}</i>\n` +
-            `👤 Удалил: <b>${this.profile.name}</b>`;
-
+            `👤 Удалил(а): <b>${authorName}</b>`;
           await this.sendTelegramNotification(
             this.profile.telegramChatIds,
             message,
@@ -438,7 +493,6 @@ class UserStore {
           e,
         );
       }
-
       toast.success("Оценка успешно удалена.");
     } catch (error) {
       toast.error("Ошибка при удалении оценки");
@@ -448,41 +502,22 @@ class UserStore {
       });
     }
   };
-
-  /**
-   * Возвращает прогноз: сколько и каких оценок нужно получить до желаемого балла
-   * @param currentMarks Массив текущих оценок четверти
-   * @param targetMark Желаемая итоговая оценка (например, 8)
-   */
   getPrediction(
     currentMarks: number[],
     targetMark: number,
   ): string {
     if (targetMark < 1 || targetMark > 10)
       return "Оценка должна быть от 1 до 10";
-
     const sum = currentMarks.reduce((a, b) => a + b, 0);
     const count = currentMarks.length;
-
-    // Если оценок еще нет, достаточно получить одну желаемую оценку
     if (count === 0) {
       return `Чтобы получить ${targetMark}, достаточно получить одну ${targetMark}.`;
     }
-
-    // Проверяем текущий средний балл с округлением Math.round
     const currentAverage = sum / count;
     if (Math.round(currentAverage) >= targetMark) {
       return `У тебя уже выходит ${targetMark} или выше! Отличная работа! 🎉`;
     }
-
-    // Минимальный средний балл, который при округлении даст targetMark (например, для 8 это 7.5)
     const requiredAverage = targetMark - 0.5;
-
-    // Алгоритм подбора: ищем сколько нужно 10-ок или 9-ок
-    // Формула: (ТекущаяСумма + N * Балл) / (ТекущееКоличество + N) >= requiredAverage
-    // Отсюда: N >= (requiredAverage * ТекущееКоличество - ТекущаяСумма) / (Балл - requiredAverage)
-
-    // Сначала пробуем идеальный вариант — получать только 10-ки
     if (targetMark <= 10) {
       const denominator10 = 10 - requiredAverage;
       if (denominator10 > 0) {
@@ -490,13 +525,10 @@ class UserStore {
           (requiredAverage * count - sum) / denominator10,
         );
         if (needed10 > 0 && needed10 <= 15) {
-          // Ограничим разумным количеством
           return `Тебе нужно получить еще ${needed10} шт оценок "10". 🚀`;
         }
       }
     }
-
-    // Если 10-ки не подходят или желаемый балл ниже, пробуем подбор других высоких оценок (например, 9)
     if (targetMark <= 9) {
       const denominator9 = 9 - requiredAverage;
       if (denominator9 > 0) {
@@ -508,17 +540,14 @@ class UserStore {
         }
       }
     }
-
     return `К сожалению, поднять балл до ${targetMark} в этой четверти математически почти невозможно. 📊`;
   }
-
   login = async (email: string, password: string) => {
     try {
       runInAction(() => {
         this.authError = null;
         this.isLoading = true;
       });
-
       await signInWithEmailAndPassword(
         auth,
         email,
@@ -546,7 +575,6 @@ class UserStore {
       });
     }
   };
-
   async logout() {
     try {
       await auth.signOut();
@@ -555,6 +583,7 @@ class UserStore {
     }
   }
 }
+export const userStore = new UserStore();
 
 // todo delete code
 // import { setDoc, serverTimestamp } from 'firebase/firestore';
@@ -621,5 +650,3 @@ class UserStore {
 //         console.error('Ошибка при создании:', error);
 //     }
 // };
-
-export const userStore = new UserStore();

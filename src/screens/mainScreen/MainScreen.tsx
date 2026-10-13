@@ -1,5 +1,5 @@
 import { NickNameIco } from "../../components/atoms/nickNameIco/NickNameIco.tsx";
-import { userStore } from "../../store/UserStore.ts";
+import { userStore } from "../../store/UserStore.tsx";
 import { Dashboard } from "../../components/organizms/dashboard/Dashboard.tsx";
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
@@ -20,7 +20,7 @@ export const MainScreen = observer(() => {
 
   const { toggleTheme } = useTheme();
 
-  const { profile } = userStore;
+  const { profile, currentUserProfile } = userStore;
   //todo delete code
   // const handleCreateUser = async () => {
   //     await quickCreateUser()
@@ -90,8 +90,8 @@ export const MainScreen = observer(() => {
 
         {/*<Hamburger isOpen={false} onToggle={() => {}}/>*/}
         <NickNameIco
-          fullName={profile?.name}
-          role={profile?.role}
+          fullName={currentUserProfile?.name}
+          role={currentUserProfile?.role}
         />
       </header>
       <main className={s.main_content}>

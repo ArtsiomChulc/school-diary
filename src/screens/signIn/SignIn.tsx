@@ -4,7 +4,7 @@ import { Input } from "../../components/atoms/input/Input.tsx";
 import { LockOpen, Mail } from "lucide-react";
 import { Button } from "../../components/atoms/button/Button.tsx";
 import { type SyntheticEvent, useState } from "react";
-import { userStore } from "../../store/UserStore.ts";
+import { userStore } from "../../store/UserStore.tsx";
 import s from "./SignIn.module.css";
 
 export const SignIn = () => {
