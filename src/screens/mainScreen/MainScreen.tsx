@@ -1,8 +1,16 @@
-import { userStore } from "../../store/UserStore.ts";
+import { NickNameIco } from "../../components/atoms/nickNameIco/NickNameIco.tsx";
+import { userStore } from "../../store/UserStore.tsx";
 import { Dashboard } from "../../components/organizms/dashboard/Dashboard.tsx";
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
+import {
+  Calculator,
+  StepBack,
+  SunMoon,
+} from "lucide-react";
 import { Text } from "../../components/atoms/text/Text.tsx";
+import { Button } from "../../components/atoms/button/Button.tsx";
+import useTheme from "../../hooks/useTheme.ts";
 import s from "./MainScreen.module.css";
 
 export const MainScreen = observer(() => {
@@ -10,7 +18,9 @@ export const MainScreen = observer(() => {
     "diary",
   );
 
-  const { profile } = userStore;
+  const { toggleTheme } = useTheme();
+
+  const { profile, currentUserProfile } = userStore;
   //todo delete code
   // const handleCreateUser = async () => {
   //     await quickCreateUser()
@@ -37,6 +47,53 @@ export const MainScreen = observer(() => {
 
   return (
     <div className={s.main_screen}>
+      <header className={s.header}>
+        <Button
+          onClick={() =>
+            setView(
+              view === "calculator"
+                ? "diary"
+                : "calculator",
+            )
+          }
+          className={s.header_btn}
+        >
+          {view === "calculator" ? (
+            <Text as={"span"}>
+              <StepBack
+                size={34}
+                color={"var(--text-main)"}
+              />
+              назад
+            </Text>
+          ) : (
+            <Text as={"span"}>
+              <Calculator
+                size={32}
+                color={"var(--text-main)"}
+              />
+              калькулятор оценок
+            </Text>
+          )}
+        </Button>
+
+        <Button
+          onClick={toggleTheme}
+          className={s.header_btn}
+          title="Сменить тему"
+        >
+          <Text as={"span"}>
+            <SunMoon size={28} color={"var(--text-main)"} />
+            сменить тему
+          </Text>
+        </Button>
+
+        {/*<Hamburger isOpen={false} onToggle={() => {}}/>*/}
+        <NickNameIco
+          fullName={currentUserProfile?.name}
+          role={currentUserProfile?.role}
+        />
+      </header>
       <main className={s.main_content}>
         <div className={s.info_block}>
           <div className={s.info_block_text}>
