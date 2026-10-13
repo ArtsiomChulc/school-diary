@@ -1,58 +1,39 @@
-import { useState, useEffect, type FC } from "react";
+import { type FC } from "react";
 import { observer } from "mobx-react-lite";
+import {
+  useParams,
+  useNavigate,
+  useLocation,
+} from "react-router";
 import { SubjectDetails } from "../subjectDetails/SubjectDetails.tsx";
 import { SubjectsTable } from "../subjectsTable/SubjectsTable.tsx";
 import GradeCalculator from "../../../screens/gradeCalculator/GradeCalculator.tsx";
 
-interface DashboardProps {
-  externalView: "diary" | "calculator";
-  setExternalView: (view: "diary" | "calculator") => void;
-}
+export const Dashboard: FC = observer(() => {
+  const { subjectId } = useParams<{ subjectId: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-export const Dashboard: FC<DashboardProps> = observer(
-  ({ externalView, setExternalView }) => {
-    const [selectedSubjectId, setSelectedSubjectId] =
-      useState<string | null>(null);
+  // 1. ОПРЕДЕЛЯЕМ ЭКРАН НА ОСНОВЕ URL
+  // Если в пути есть слово "calculator", показываем калькулятор оценок
+  if (location.pathname.includes("calculator")) {
+    return <GradeCalculator />;
+  }
 
-    const [subView, setSubView] = useState<
-      "table" | "details"
-    >("table");
-
-    useEffect(() => {
-      if (externalView === "calculator") {
-        setSelectedSubjectId(null);
-        setSubView("table");
-      }
-    }, [externalView]);
-
-    const handleSelectSubject = (id: string) => {
-      setSelectedSubjectId(id);
-      setSubView("details");
-      setExternalView("diary"); // Гарантируем, что режим 'diary' активен
-    };
-
-    const handleBackToTable = () => {
-      setSelectedSubjectId(null);
-      setSubView("table");
-    };
-
-    if (externalView === "calculator") {
-      return <GradeCalculator />;
-    }
-
-    if (subView === "details" && selectedSubjectId) {
-      return (
-        <SubjectDetails
-          subjectId={selectedSubjectId}
-          onBack={handleBackToTable}
-        />
-      );
-    }
-
+  // Если в URL есть динамический параметр subjectId, показываем детали этого предмета
+  if (subjectId) {
     return (
-      <SubjectsTable
-        onSelectSubject={handleSelectSubject}
+      <SubjectDetails
+        subjectId={subjectId}
+        onBack={() => navigate("/subjects")} // Шаг назад к таблице через навигацию
       />
     );
-  },
-);
+  }
+
+  // 2. ДЕФОЛТНЫЙ ВАРИАНТ (Если мы на "/" или "/subjects")
+  return (
+    <SubjectsTable
+      onSelectSubject={(id) => navigate(`/subjects/${id}`)} // Переход на карточку предмета по URL
+    />
+  );
+});

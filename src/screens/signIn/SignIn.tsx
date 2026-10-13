@@ -34,7 +34,7 @@ export const SignIn = observer(() => {
   };
 
   if (isLoading) {
-    return <Loading message={"Загрузка данных"} />;
+    return <Loading message={"Загружаем профиль"} />;
   }
 
   return (

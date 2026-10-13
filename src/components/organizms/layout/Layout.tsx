@@ -4,6 +4,7 @@ import type { FC } from "react";
 import { auth } from "../../../../firebase.ts";
 import { Text } from "../../atoms/text/Text.tsx";
 import Header from "../header/Header.tsx";
+import toast from "react-hot-toast";
 
 export const Layout: FC = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export const Layout: FC = () => {
       await signOut(auth);
       navigate("/login");
     } catch (error) {
+      toast.error("Ошибка при выходе из системы");
       console.error("Ошибка при выходе из системы:", error);
     }
   };

@@ -4,6 +4,7 @@ import {
   Calculator,
   SunMoon,
   OutdentIcon,
+  BookAIcon,
 } from "lucide-react";
 import { NickNameIco } from "../../atoms/nickNameIco/NickNameIco.tsx";
 import useTheme from "../../../hooks/useTheme.ts";
@@ -11,6 +12,8 @@ import { userStore } from "../../../store/UserStore.tsx";
 import { NavLink } from "react-router";
 import { observer } from "mobx-react-lite";
 import s from "./Header.module.css";
+import useWindowWidth from "../../../hooks/useWindowSize.ts";
+import { Hamburger } from "../../molecules/hamburger/Hamburger.tsx";
 
 interface Props {
   handleLogout: () => void;
@@ -19,16 +22,32 @@ interface Props {
 const Header = observer(({ handleLogout }: Props) => {
   const { toggleTheme } = useTheme();
   const { currentUserProfile } = userStore;
+  const width = useWindowWidth();
+
+  const mobile = width <= 540;
 
   return (
     <header className={s.header}>
       <NavLink to={"/calculator"} className={s.header_btn}>
-        <Text as={"span"}>
-          <Calculator
-            size={32}
-            color={"var(--text-main)"}
-          />
-          калькулятор оценок
+        <Text as={"span"} size={mobile ? "sm" : "md"}>
+          {mobile && (
+            <Calculator
+              size={32}
+              color={"var(--text-main)"}
+            />
+          )}
+          Калькулятор оценок
+        </Text>
+      </NavLink>
+      <NavLink to={"/subjects"} className={s.header_btn}>
+        <Text as={"span"} size={mobile ? "sm" : "md"}>
+          {mobile && (
+            <BookAIcon
+              size={32}
+              color={"var(--text-main)"}
+            />
+          )}
+          Дневник
         </Text>
       </NavLink>
 
@@ -37,9 +56,11 @@ const Header = observer(({ handleLogout }: Props) => {
         className={s.header_btn}
         title="Сменить тему"
       >
-        <Text as={"span"}>
-          <SunMoon size={28} color={"var(--text-main)"} />
-          сменить тему
+        <Text as={"span"} size={mobile ? "sm" : "md"}>
+          {mobile && (
+            <SunMoon size={28} color={"var(--text-main)"} />
+          )}
+          Сменить тему
         </Text>
       </Button>
 
@@ -48,16 +69,20 @@ const Header = observer(({ handleLogout }: Props) => {
         className={s.header_btn}
         title="Выход"
       >
-        <Text as={"span"}>
-          <OutdentIcon
-            size={28}
-            color={"var(--text-main)"}
-          />
+        <Text as={"span"} size={mobile ? "sm" : "md"}>
+          {mobile && (
+            <OutdentIcon
+              size={28}
+              color={"var(--text-main)"}
+            />
+          )}
           Выход
         </Text>
       </Button>
 
-      {/*<Hamburger isOpen={false} onToggle={() => {}}/>*/}
+      {mobile && (
+        <Hamburger isOpen={false} onToggle={() => {}} />
+      )}
       <NickNameIco
         fullName={currentUserProfile?.name}
         role={currentUserProfile?.role}

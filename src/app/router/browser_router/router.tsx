@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router";
 import { SignIn } from "../../../screens/signIn/SignIn.tsx";
 import { Layout } from "../../../components/organizms/layout/Layout.tsx";
 import GradeCalculator from "../../../screens/gradeCalculator/GradeCalculator.tsx";
+import { MainScreen } from "../../../screens/mainScreen/MainScreen.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "subjects",
-            element: <div>subjects</div>,
+            element: <MainScreen />,
           },
           {
             path: "calculator",
