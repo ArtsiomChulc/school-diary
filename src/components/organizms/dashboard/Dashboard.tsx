@@ -1,8 +1,8 @@
 import { useState, useEffect, type FC } from "react";
 import { observer } from "mobx-react-lite";
-import { GradeCalculator } from "../../../screens/gradeCalculator/GradeCalculator.tsx";
 import { SubjectDetails } from "../subjectDetails/SubjectDetails.tsx";
 import { SubjectsTable } from "../subjectsTable/SubjectsTable.tsx";
+import GradeCalculator from "../../../screens/gradeCalculator/GradeCalculator.tsx";
 
 interface DashboardProps {
   externalView: "diary" | "calculator";
@@ -37,11 +37,7 @@ export const Dashboard: FC<DashboardProps> = observer(
     };
 
     if (externalView === "calculator") {
-      return (
-        <GradeCalculator
-          onBack={() => setExternalView("diary")}
-        />
-      );
+      return <GradeCalculator />;
     }
 
     if (subView === "details" && selectedSubjectId) {
