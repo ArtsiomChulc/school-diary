@@ -30,8 +30,8 @@ const GradeCalculator: FC = observer(() => {
 
   return (
     <div className={s.container}>
-      <NavLink to={"/"} className={s.backBtn}>
-        ← Назад в дневник
+      <NavLink to={"/subjects"} className={s.backBtn}>
+        ← Перейти в дневник
       </NavLink>
       <h2 className={s.title}>
         🔮 Магический калькулятор оценок

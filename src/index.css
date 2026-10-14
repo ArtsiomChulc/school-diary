@@ -7,8 +7,12 @@
   --text-main: #212121;
   --text-color-btn: #fbf8f1;
   --bg: #f7f3eb;
+  --bg-main: #f4f5f7;
   --bg-header: rgba(247, 243, 235, 0.9);
   --bg-blocks: #efe5d4;
+  --bg-card: #ffffff;
+  --border-color: #e1e4e8;
+  --bg-input: #f6f8fa;
   --border: #ded2c3;
   --danger: rgb(255 90 31 / 0.73);
   --bg-button-form: #094328;
@@ -75,10 +79,14 @@
   --text-main: #f3f4f6;
   --text-secondary: #9ca3af;
   --text-color-btn: #fbf8f1;
+  --bg-main: #121212;
   --bg: #111827;
   --bg-header: rgba(17, 24, 39, 0.9);
   --bg-blocks: #1f2937;
   --form-bg: #1f2937;
+  --bg-card: #0d4223;
+  --border-color: #1a5c32;
+  --bg-input: #072a15;
   --border: #374151;
   --shadow:
     rgba(0, 0, 0, 0.5) 0 10px 15px -3px,
@@ -130,6 +138,10 @@ select {
   cursor: inherit;
   line-height: inherit;
   outline: none;
+}
+
+a {
+  text-decoration: none;
 }
 
 @supports (appearance: base-select) {

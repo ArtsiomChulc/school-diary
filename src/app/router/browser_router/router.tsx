@@ -4,6 +4,8 @@ import { SignIn } from "../../../screens/signIn/SignIn.tsx";
 import { Layout } from "../../../components/organizms/layout/Layout.tsx";
 import GradeCalculator from "../../../screens/gradeCalculator/GradeCalculator.tsx";
 import { MainScreen } from "../../../screens/mainScreen/MainScreen.tsx";
+import { SubjectDetails } from "../../../components/organizms/subjectDetails/SubjectDetails.tsx";
+import { Statistics } from "../../../screens/statistics/Statistics.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +24,7 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <div>home</div>,
+            element: <Statistics />,
           },
           {
             path: "subjects",
@@ -34,7 +36,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "subjects/:subjectId",
-            element: <div>subjects/:subjectId</div>,
+            element: <SubjectDetails />,
           },
         ],
       },

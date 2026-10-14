@@ -3,7 +3,7 @@ import { signOut } from "firebase/auth";
 import type { FC } from "react";
 import { auth } from "../../../../firebase.ts";
 import { Text } from "../../atoms/text/Text.tsx";
-import Header from "../header/Header.tsx";
+import { Header } from "../header/Header.tsx";
 import toast from "react-hot-toast";
 
 export const Layout: FC = () => {

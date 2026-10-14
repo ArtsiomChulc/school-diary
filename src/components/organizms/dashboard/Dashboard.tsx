@@ -14,23 +14,14 @@ export const Dashboard: FC = observer(() => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 1. ОПРЕДЕЛЯЕМ ЭКРАН НА ОСНОВЕ URL
-  // Если в пути есть слово "calculator", показываем калькулятор оценок
   if (location.pathname.includes("calculator")) {
     return <GradeCalculator />;
   }
 
-  // Если в URL есть динамический параметр subjectId, показываем детали этого предмета
   if (subjectId) {
-    return (
-      <SubjectDetails
-        subjectId={subjectId}
-        onBack={() => navigate("/subjects")} // Шаг назад к таблице через навигацию
-      />
-    );
+    return <SubjectDetails />;
   }
 
-  // 2. ДЕФОЛТНЫЙ ВАРИАНТ (Если мы на "/" или "/subjects")
   return (
     <SubjectsTable
       onSelectSubject={(id) => navigate(`/subjects/${id}`)} // Переход на карточку предмета по URL
