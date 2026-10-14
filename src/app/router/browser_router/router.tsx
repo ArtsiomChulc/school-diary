@@ -1,7 +1,7 @@
 import { ProtectedRoute } from "../ProtectedRoute.tsx";
 import { createBrowserRouter } from "react-router";
 import { SignIn } from "../../../screens/signIn/SignIn.tsx";
-import { Layout } from "../../../components/organizms/layout/Layout.tsx";
+import { Layout } from "../../layout/Layout.tsx";
 import GradeCalculator from "../../../screens/gradeCalculator/GradeCalculator.tsx";
 import { MainScreen } from "../../../screens/mainScreen/MainScreen.tsx";
 import { SubjectDetails } from "../../../components/organizms/subjectDetails/SubjectDetails.tsx";

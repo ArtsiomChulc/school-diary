@@ -24,7 +24,7 @@ interface Props {
 export const Header: FC<Props> = observer(
   ({ handleLogout }) => {
     const { toggleTheme } = useTheme();
-    const { profile } = userStore;
+    const { currentUserProfile } = userStore;
     const width = useWindowWidth();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -104,8 +104,9 @@ export const Header: FC<Props> = observer(
 
         {!mobile && (
           <NickNameIco
-            fullName={profile?.name}
-            role={profile?.role}
+            fullName={currentUserProfile?.name}
+            role={currentUserProfile?.role}
+            email={currentUserProfile?.email}
           />
         )}
 
@@ -121,8 +122,8 @@ export const Header: FC<Props> = observer(
             >
               <div className={s.sidebar_profile}>
                 <NickNameIco
-                  fullName={profile?.name}
-                  role={profile?.role}
+                  fullName={currentUserProfile?.name}
+                  role={currentUserProfile?.role}
                 />
                 <Text
                   as="p"
@@ -130,7 +131,7 @@ export const Header: FC<Props> = observer(
                   color="var(--text-secondary)"
                   style={{ marginTop: "4px" }}
                 >
-                  {profile?.email}
+                  {currentUserProfile?.email}
                 </Text>
               </div>
 

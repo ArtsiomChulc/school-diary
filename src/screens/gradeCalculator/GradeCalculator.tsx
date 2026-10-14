@@ -2,8 +2,8 @@ import { type FC, useState } from "react";
 import { userStore } from "../../store/UserStore.tsx";
 import { NavLink } from "react-router";
 import { observer } from "mobx-react-lite";
-import s from "./GradeCalculator.module.css";
 import { Text } from "../../components/atoms/text/Text.tsx";
+import s from "./GradeCalculator.module.css";
 
 const GradeCalculator: FC = observer(() => {
   const { profile } = userStore;
@@ -35,7 +35,8 @@ const GradeCalculator: FC = observer(() => {
         ← Перейти в дневник
       </NavLink>
       <h2 className={s.title}>
-        🔮 Магический калькулятор оценок
+        🔮 Магический калькулятор оценок для -{profile.name}
+        -
       </h2>
       <p className={s.subtitle}>
         Узнай, сколько точных оценок нужно получить, чтобы

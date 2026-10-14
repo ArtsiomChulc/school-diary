@@ -4,11 +4,13 @@ import s from "./NickNameIco.module.css";
 interface NickNameIco {
   fullName?: string;
   role?: string;
+  email?: string;
 }
 
 export const NickNameIco = ({
   fullName = "Нет данных",
   role = "--------",
+  email = "",
 }: NickNameIco) => {
   const initials = fullName
     .split(" ")
@@ -28,10 +30,17 @@ export const NickNameIco = ({
         </Text>
         <Text
           as={"span"}
-          size={"sm"}
+          size={"xs"}
           color={"var(--text-secondary)"}
         >
           {role}
+        </Text>
+        <Text
+          as={"span"}
+          size={"xxs"}
+          color={"var(--text-secondary)"}
+        >
+          {email}
         </Text>
       </div>
     </div>

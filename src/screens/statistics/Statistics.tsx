@@ -59,11 +59,10 @@ export const Statistics: FC = observer(() => {
 
   return (
     <div className={s.statisticsWrapper}>
-      {/* Шапка блока */}
       <div className={s.header}>
         <BarChart3 className={s.headerIcon} size={24} />
         <Text as="h2" color="var(--text-main)">
-          Статистика успеваемости
+          Статистика успеваемости для -{profile.name}-
         </Text>
       </div>
 

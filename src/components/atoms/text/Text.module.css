@@ -3,6 +3,10 @@
     line-height: 1;
 }
 
+.xxs {
+    font-size: 8px;
+}
+
 .xs {
     font-size: 12px;
 }

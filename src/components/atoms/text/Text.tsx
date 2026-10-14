@@ -20,7 +20,15 @@ export type TextProps = {
   as?: TextTag;
   children?: ReactNode;
 
-  size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | "large";
+  size?:
+    | "xxs"
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "xxl"
+    | "large";
   weight?: 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
   color?: string;
@@ -49,6 +57,7 @@ const sizeToClass: Record<
   NonNullable<TextProps["size"]>,
   string
 > = {
+  xxs: s.xxs,
   xs: s.xs,
   sm: s.sm,
   md: s.md,

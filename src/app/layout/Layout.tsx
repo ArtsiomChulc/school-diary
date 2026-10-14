@@ -1,11 +1,11 @@
 import { Outlet, useNavigate } from "react-router";
 import { signOut } from "firebase/auth";
 import type { FC } from "react";
-import { auth } from "../../../../firebase.ts";
-import { Text } from "../../atoms/text/Text.tsx";
-import { Header } from "../header/Header.tsx";
+import { auth } from "../../../firebase.ts";
+import { Text } from "../../components/atoms/text/Text.tsx";
+import { Header } from "../../components/organizms/header/Header.tsx";
 import toast from "react-hot-toast";
-import { MainContainer } from "../containers/main_container/MainContainer.tsx";
+import { MainContainer } from "../../components/organizms/containers/main_container/MainContainer.tsx";
 import s from "./Layout.module.css";
 
 export const Layout: FC = () => {
