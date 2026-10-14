@@ -31,7 +31,6 @@ export const Statistics: FC = observer(() => {
 
   const subjectsList = Object.values(profile.subjects);
 
-  // Конфиг для вкладок четвертей
   const termsConfig: { key: TermKey; label: string }[] = [
     { key: "term_1", label: "I ч." },
     { key: "term_2", label: "II ч." },
@@ -39,7 +38,6 @@ export const Statistics: FC = observer(() => {
     { key: "term_4", label: "IV ч." },
   ];
 
-  // Вспомогательная функция для расчета статистики по конкретному предмету
   const calculateSubjectStats = (marks: number[]) => {
     if (!marks || marks.length === 0) {
       return { average: 0, count: 0 };
@@ -47,17 +45,16 @@ export const Statistics: FC = observer(() => {
     const sum = marks.reduce((acc, val) => acc + val, 0);
     const average = sum / marks.length;
     return {
-      average: Number(average.toFixed(2)), // Округляем до сотых для точности
+      average: Number(average.toFixed(1)),
       count: marks.length,
     };
   };
 
-  // Функция для динамического окрашивания среднего балла по 10-балльной системе РБ
   const getBadgeClass = (avg: number) => {
-    if (avg >= 8) return s.badgeHigh; // Высокий уровень (8-10)
-    if (avg >= 6) return s.badgeMedium; // Средний/достаточный уровень (6-7)
-    if (avg >= 4) return s.badgeLow; // Удовлетворительный уровень (4-5)
-    return s.badgeCritical; // Требует внимания (1-3)
+    if (avg >= 8) return s.badgeHigh;
+    if (avg >= 6) return s.badgeMedium;
+    if (avg >= 4) return s.badgeLow;
+    return s.badgeCritical;
   };
 
   return (
@@ -70,7 +67,6 @@ export const Statistics: FC = observer(() => {
         </Text>
       </div>
 
-      {/* Переключатель четвертей */}
       <div className={s.tabs}>
         {termsConfig.map(({ key, label }) => (
           <Button
@@ -83,7 +79,6 @@ export const Statistics: FC = observer(() => {
         ))}
       </div>
 
-      {/* Сетка карточек предметов */}
       <div className={s.grid}>
         {subjectsList.map((subject) => {
           const termData = subject[selectedTerm];
@@ -149,7 +144,6 @@ export const Statistics: FC = observer(() => {
                 </div>
               </div>
 
-              {/* Декоративный индикатор итоговой оценки, если она уже выставлена в Firestore */}
               {termData?.finalMark && (
                 <div className={s.finalMarkFooter}>
                   <Text as="small">
