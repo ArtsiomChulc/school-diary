@@ -68,7 +68,13 @@ export const Header: FC<Props> = observer(
               className={s.header_btn}
               title="Сменить тему"
             >
-              <Text as="span">Сменить тему</Text>
+              <Text
+                as="span"
+                size={"sm"}
+                className={s.header_btn_theme}
+              >
+                Сменить тему
+              </Text>
             </Button>
             <Button
               onClick={handleLogout}

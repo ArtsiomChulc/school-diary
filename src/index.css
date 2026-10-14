@@ -2,29 +2,35 @@
   box-sizing: border-box;
 }
 
-:root {
-  --text-secondary: #757575;
-  --text-main: #212121;
-  --text-color-btn: #fbf8f1;
-  --bg: #f7f3eb;
-  --bg-main: #f4f5f7;
-  --bg-header: rgba(247, 243, 235, 0.9);
-  --bg-blocks: #efe5d4;
-  --bg-card: #ffffff;
-  --border-color: #e1e4e8;
-  --bg-input: #f6f8fa;
-  --border: #ded2c3;
-  --danger: rgb(255 90 31 / 0.73);
-  --bg-button-form: #094328;
-  --form-bg: rgba(254, 251, 247, 0.95);
-  --accent: #aa3bff;
-  --hover-tr: #f7fafc;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
+:root, [data-theme="light"] {
+  --text-main: lab(11.95% 0 0);
+  --text-secondary: lab(49.03% 0 0);
+  --text-color-btn: lab(97.71% -0.42 2.76);
+
+  --bg: lab(96.11% -0.22 3.09);
+  --bg-main: #f7f3eb;
+  --bg-header: lab(96.11% -0.22 3.09 / 0.9);
+  --bg-blocks: lab(91.56% 0.81 7.27);
+  --bg-card: #efe5d4;
+  --bg-input: lab(97.43% -0.45 -0.72);
+  --form-bg: lab(98.81% 0.1 1.62 / 0.95);
+  --bg-footer: rgb(239 229 212 / 0.6);
+
+  --border-color: lab(90.73% -0.47 -1.24);
+  --border: lab(84.97% 1.09 7.42);
+
+  --bg-button-form: lab(24.23% -25.26 11.23);
+  --danger: lab(57.65% 58.74 57.06 / 0.73);
+  --accent: lab(46.06% 75.32 -82.44);
+  --accent-bg: lab(46.06% 75.32 -82.44 / 0.1);
+  --accent-border: lab(46.06% 75.32 -82.44 / 0.5);
+
+  --hover-tr: lab(98.12% -0.62 -0.99);
+  --social-bg: lab(95.66% -0.41 2.22 / 0.5);
+
   --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px,
-    rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+          rgba(0, 0, 0, 0.1) 0 10px 15px -3px,
+          rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
   --sans: system-ui, "Segoe UI", Roboto, sans-serif;
   --heading: system-ui, "Segoe UI", Roboto, sans-serif;
@@ -45,59 +51,36 @@
   }
 }
 
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    !* Основной и вторичный текст — высокий контраст, без едкого белого *!*/
-/*    --text-main: #f3f4f6;          !* Бело-серый (slate-100) *!*/
-/*    --text-secondary: #9ca3af;     !* Приглушенный серый для описаний (gray-400) *!*/
-/*    --text-color-btn: #fbf8f1;     !* Цвет текста на кнопках (остается светлым) *!*/
-
-/*    !* Фоны и карточки — глубокий темный сланцевый оттенок вместо грязного бежевого *!*/
-/*    --bg: #111827;                 !* Глубокий темный фон приложения *!*/
-/*    --bg-header: rgba(17, 24, 39, 0.9); !* Полупрозрачная шапка *!*/
-/*    --bg-blocks: #1f2937;          !* Светло-серые карточки предметов и формы (высокий контраст!) *!*/
-/*    --form-bg: #1f2937;            !* Фон формы входа *!*/
-
-/*    !* Границы и тени *!*/
-/*    --border: #374151;             !* Аккуратные темные разделители таблиц и инпутов *!*/
-/*    --shadow: rgba(0, 0, 0, 0.5) 0 10px 15px -3px, rgba(0, 0, 0, 0.3) 0 4px 6px -2px;*/
-/*    --hover-tr: #201d1a;*/
-
-/*    !* Функциональные элементы *!*/
-/*    --danger: rgb(239 68 68 / 0.8);  !* Насыщенный красный для удаления оценок *!*/
-/*    --bg-button-form: #10b981;     !* Изумрудно-зеленый для кнопок «Войти» / «Добавить» (вместо блеклого темно-зеленого) *!*/
-
-/*    !* Мягкий фиолетовый акцент (для годовых оценок/активных элементов) *!*/
-/*    --accent: #c084fc;*/
-/*    --accent-bg: rgba(192, 132, 252, 0.1);*/
-/*    --accent-border: rgba(192, 132, 252, 0.4);*/
-/*    --social-bg: rgba(31, 41, 55, 0.5);*/
-/*  }*/
-/*}*/
-
 :root[data-theme="dark"] {
-  --text-main: #f3f4f6;
-  --text-secondary: #9ca3af;
-  --text-color-btn: #fbf8f1;
-  --bg-main: #121212;
-  --bg: #111827;
-  --bg-header: rgba(17, 24, 39, 0.9);
-  --bg-blocks: #1f2937;
-  --form-bg: #1f2937;
-  --bg-card: #0d4223;
-  --border-color: #1a5c32;
-  --bg-input: #072a15;
-  --border: #374151;
+  --text-main: lab(96.02% -0.42 -0.66);
+  --text-secondary: lab(67.24% -0.43 -1.21);
+  --text-color-btn: lab(97.71% -0.42 2.76);
+
+  --bg-main: lab(6.12% 0 0);
+  --bg: lab(9.28% 1.83 -7.21);
+  --bg-header: lab(9.28% 1.83 -7.21 / 0.9);
+  --bg-blocks: lab(16.71% 1.13 -6.37);
+  --form-bg: lab(16.71% 1.13 -6.37);
+  --bg-card: #094328;
+  --bg-footer: rgb(9 67 40 / 0.6);
+
+  --border-color: lab(34.22% -28.91 16.48);
+  --bg-input: lab(14.62% -18.73 9.42);
+
+  --border:  lab(26.85% 0.81 -5.74);
+
+  --bg-button-form: lab(66.58% -54.76 18.06);
+  --danger: lab(53.24% 67.95 43.11 / 0.8);
+  --accent: lab(62.67% 43.32 -42.82);
+  --accent-bg: lab(62.67% 43.32 -42.82 / 0.1);
+  --accent-border: lab(62.67% 43.32 -42.82 / 0.4);
+
+  --hover-tr: lab(11.45% 1.05 2.14);
+  --social-bg: lab(16.71% 1.13 -6.37 / 0.5);
+
   --shadow:
-    rgba(0, 0, 0, 0.5) 0 10px 15px -3px,
-    rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
-  --hover-tr: #201d1a;
-  --danger: rgb(239 68 68 / 0.8);
-  --bg-button-form: #10b981;
-  --accent: #c084fc;
-  --accent-bg: rgba(192, 132, 252, 0.1);
-  --accent-border: rgba(192, 132, 252, 0.4);
-  --social-bg: rgba(31, 41, 55, 0.5);
+          rgba(0, 0, 0, 0.5) 0 10px 15px -3px,
+          rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
 }
 
 #root {

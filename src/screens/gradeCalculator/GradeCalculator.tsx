@@ -3,6 +3,7 @@ import { userStore } from "../../store/UserStore.tsx";
 import { NavLink } from "react-router";
 import { observer } from "mobx-react-lite";
 import s from "./GradeCalculator.module.css";
+import { Text } from "../../components/atoms/text/Text.tsx";
 
 const GradeCalculator: FC = observer(() => {
   const { profile } = userStore;
@@ -69,9 +70,9 @@ const GradeCalculator: FC = observer(() => {
 
           return (
             <div key={subject.id} className={s.card}>
-              <h3 className={s.subjectName}>
+              <Text as={"h3"} className={s.subjectName}>
                 {subject.name}
-              </h3>
+              </Text>
 
               <div className={s.row}>
                 <span>Текущие оценки: </span>

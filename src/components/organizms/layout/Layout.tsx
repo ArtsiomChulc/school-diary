@@ -5,6 +5,8 @@ import { auth } from "../../../../firebase.ts";
 import { Text } from "../../atoms/text/Text.tsx";
 import { Header } from "../header/Header.tsx";
 import toast from "react-hot-toast";
+import { MainContainer } from "../containers/main_container/MainContainer.tsx";
+import s from "./Layout.module.css";
 
 export const Layout: FC = () => {
   const navigate = useNavigate();
@@ -20,19 +22,19 @@ export const Layout: FC = () => {
   };
 
   return (
-    <div>
+    <MainContainer>
       <Header handleLogout={handleLogout} />
-      <main>
+      <main className={s.main}>
         <div>
           <Outlet />
         </div>
       </main>
-      <footer>
+      <footer className={s.footer}>
         <Text align="center" color={"var(--text-main)"}>
           © {new Date().getFullYear()} Дневник ученика 4
-          класса Республики Беларусь. Все права защищены.
+          класса средняя школа №17.
         </Text>
       </footer>
-    </div>
+    </MainContainer>
   );
 };

@@ -4,18 +4,6 @@
   margin: 0 auto;
 }
 
-.header {
-  width: 100%;
-  min-height: 80px;
-  border-bottom: 0.8px solid var(--border);
-  backdrop-filter: blur(12px);
-  background: var(--bg-header);
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .header_btn {
   border: none;
   padding: 8px 10px;
