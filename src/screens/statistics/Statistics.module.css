@@ -1,0 +1,142 @@
+.statisticsWrapper {
+    padding: 16px;
+    background-color: var(--bg-main, #f9f9fb);
+    border-radius: 12px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.headerIcon {
+    color: var(--bg-button-form, #0d4223);
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.tabBtn {
+    flex: 1;
+    max-width: 100px;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.tabBtnActive {
+    background-color: var(--bg-button-form, #0d4223) !important;
+    color: #fff !important;
+}
+
+.tabBtnInactive {
+    background-color: var(--bg-input, #fff) !important;
+    color: var(--text-main, #333) !important;
+    border: 1px solid var(--border-color, #e1e4e8) !important;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--bg-card, #fff);
+    border: 1px solid var(--border-color, #e1e4e8);
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    border-color: var(--bg-button-form, #0d4223);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.subjectName {
+    margin: 0;
+    font-size: 16px;
+    color: var(--text-main);
+    text-transform: capitalize;
+}
+
+.avgBadge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 32px;
+    text-align: center;
+}
+
+/* Цветовое кодирование уровней по системе образования РБ */
+.badgeHigh {
+    background-color: #e6f4ea;
+    color: #137333;
+}
+
+.badgeMedium {
+    background-color: #fef7e0;
+    color: #b06000;
+}
+
+.badgeLow {
+    background-color: #feefe3;
+    color: #c26401;
+}
+
+.badgeCritical {
+    background-color: #fce8e6;
+    color: #c5221f;
+}
+
+.cardBody {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.infoRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.infoIcon {
+    color: var(--text-secondary, #666);
+}
+
+.finalMarkFooter {
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border-color, #e1e4e8);
+    color: var(--bg-button-form, #0d4223);
+    font-style: italic;
+}
+
+.emptyState {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}

@@ -1,0 +1,202 @@
+import { type FC, useState } from "react";
+import { Button } from "../../atoms/button/Button.tsx";
+import { Text } from "../../atoms/text/Text.tsx";
+import {
+  BookAIcon,
+  Calculator,
+  HomeIcon,
+  OutdentIcon,
+  SunMoon,
+} from "lucide-react";
+import { NickNameIco } from "../../atoms/nickNameIco/NickNameIco.tsx";
+import useTheme from "../../../hooks/useTheme.ts";
+import { userStore } from "../../../store/UserStore.tsx";
+import { NavLink } from "react-router";
+import { observer } from "mobx-react-lite";
+import useWindowWidth from "../../../hooks/useWindowSize.ts";
+import { Hamburger } from "../../molecules/hamburger/Hamburger.tsx";
+import s from "./Header.module.css";
+
+interface Props {
+  handleLogout: () => void;
+}
+
+export const Header: FC<Props> = observer(
+  ({ handleLogout }) => {
+    const { toggleTheme } = useTheme();
+    const { profile } = userStore;
+    const width = useWindowWidth();
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const mobile = width <= 868;
+
+    const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+    const closeMenu = () => setIsMenuOpen(false);
+
+    return (
+      <header className={s.header}>
+        {!mobile && (
+          <nav className={s.desktop_nav}>
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `${s.header_btn} ${isActive ? s.active : ""}`
+              }
+            >
+              <Text as="span">Домой</Text>
+            </NavLink>
+            <NavLink
+              to="/calculator"
+              className={({ isActive }) =>
+                `${s.header_btn} ${isActive ? s.active : ""}`
+              }
+            >
+              <Text as="span">Калькулятор оценок</Text>
+            </NavLink>
+            <NavLink
+              to="/subjects"
+              className={({ isActive }) =>
+                `${s.header_btn} ${isActive ? s.active : ""}`
+              }
+            >
+              <Text as="span">Дневник</Text>
+            </NavLink>
+            <Button
+              onClick={toggleTheme}
+              className={s.header_btn}
+              title="Сменить тему"
+            >
+              <Text
+                as="span"
+                size={"sm"}
+                className={s.header_btn_theme}
+              >
+                Сменить тему
+              </Text>
+            </Button>
+            <Button
+              onClick={handleLogout}
+              className={s.header_btn}
+              title="Выход"
+            >
+              <Text as="span">Выход</Text>
+            </Button>
+          </nav>
+        )}
+
+        {mobile && (
+          <div className={s.mobile_header_row}>
+            <Hamburger
+              isOpen={isMenuOpen}
+              onToggle={toggleMenu}
+            />
+            <Text
+              as="span"
+              weight={600}
+              className={s.mobile_title}
+            >
+              🏫 Дневник
+            </Text>
+          </div>
+        )}
+
+        {!mobile && (
+          <NickNameIco
+            fullName={profile?.name}
+            role={profile?.role}
+          />
+        )}
+
+        {mobile && (
+          <>
+            <div
+              className={`${s.overlay} ${isMenuOpen ? s.overlay_active : ""}`}
+              onClick={closeMenu}
+            />
+
+            <aside
+              className={`${s.sidebar} ${isMenuOpen ? s.sidebar_open : ""}`}
+            >
+              <div className={s.sidebar_profile}>
+                <NickNameIco
+                  fullName={profile?.name}
+                  role={profile?.role}
+                />
+                <Text
+                  as="p"
+                  size="sm"
+                  color="var(--text-secondary)"
+                  style={{ marginTop: "4px" }}
+                >
+                  {profile?.email}
+                </Text>
+              </div>
+
+              <nav className={s.sidebar_nav}>
+                <NavLink
+                  to="/"
+                  end
+                  onClick={closeMenu}
+                  className={({ isActive }) =>
+                    `${s.sidebar_link} ${isActive ? s.sidebar_link_active : ""}`
+                  }
+                >
+                  <HomeIcon size={22} />
+                  <Text as="span">Главная</Text>
+                </NavLink>
+
+                <NavLink
+                  to="/subjects"
+                  onClick={closeMenu}
+                  className={({ isActive }) =>
+                    `${s.sidebar_link} ${isActive ? s.sidebar_link_active : ""}`
+                  }
+                >
+                  <BookAIcon size={22} />
+                  <Text as="span">Дневник</Text>
+                </NavLink>
+
+                <NavLink
+                  to="/calculator"
+                  onClick={closeMenu}
+                  className={({ isActive }) =>
+                    `${s.sidebar_link} ${isActive ? s.sidebar_link_active : ""}`
+                  }
+                >
+                  <Calculator size={22} />
+                  <Text as="span">Калькулятор</Text>
+                </NavLink>
+              </nav>
+
+              <div className={s.sidebar_footer}>
+                <Button
+                  onClick={() => {
+                    toggleTheme();
+                    closeMenu();
+                  }}
+                  className={s.sidebar_btn}
+                >
+                  <SunMoon size={20} />
+                  <Text as="span">Сменить тему</Text>
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    handleLogout();
+                    closeMenu();
+                  }}
+                  className={`${s.sidebar_btn} ${s.logout_btn}`}
+                >
+                  <OutdentIcon size={20} />
+                  <Text as="span">Выход</Text>
+                </Button>
+              </div>
+            </aside>
+          </>
+        )}
+      </header>
+    );
+  },
+);
