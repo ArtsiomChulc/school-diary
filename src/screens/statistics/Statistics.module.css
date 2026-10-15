@@ -59,10 +59,11 @@
     justify-content: space-between;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    border-color: var(--bg-button-form, #0d4223);
+@media (hover: hover) {
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
 }
 
 .cardHeader {
