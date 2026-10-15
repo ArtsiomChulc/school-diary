@@ -90,23 +90,24 @@
     transform: translateX(0); /* Показываем меню */
 }
 
-/* Заднее затемнение */
 .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.3);
     z-index: 150;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
+    backdrop-filter: blur(0px);
 }
 
 .overlay_active {
     opacity: 1;
     pointer-events: auto;
+    backdrop-filter: blur(12px) saturate(160%);
 }
 
 .sidebar_profile {
