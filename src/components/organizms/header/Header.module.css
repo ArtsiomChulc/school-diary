@@ -81,13 +81,12 @@
     flex-direction: column;
     padding: 24px 16px;
     box-sizing: border-box;
-    /* Плавный выезд слева наружу */
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar_open {
-    transform: translateX(0); /* Показываем меню */
+    transform: translateX(0);
 }
 
 .overlay {
@@ -96,7 +95,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
     z-index: 150;
     opacity: 0;
     pointer-events: none;
@@ -107,7 +106,7 @@
 .overlay_active {
     opacity: 1;
     pointer-events: auto;
-    backdrop-filter: blur(12px) saturate(160%);
+    backdrop-filter: blur(3px) saturate(160%);
 }
 
 .sidebar_profile {
