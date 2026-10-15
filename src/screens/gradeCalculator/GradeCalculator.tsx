@@ -3,21 +3,24 @@ import { userStore } from "../../store/UserStore.tsx";
 import { NavLink } from "react-router";
 import { observer } from "mobx-react-lite";
 import { Text } from "../../components/atoms/text/Text.tsx";
+import { TermSelector } from "../../components/molecules/termSelector/TermSelector.tsx";
+import { useStudentSubjects } from "../../hooks/useStudentSubjects.ts";
+import { useTermSelection } from "../../hooks/useTermSelection.ts";
 import s from "./GradeCalculator.module.css";
 
 const GradeCalculator: FC = observer(() => {
-  const { profile } = userStore;
+  const {
+    profile,
+    isEmpty,
+    subjects: subjectsList,
+  } = useStudentSubjects();
+  const termSelector = useTermSelection();
+  const { selectedTerm } = termSelector;
 
   const [targets, setTargets] = useState<
     Record<string, number>
   >({});
-  const [selectedTerm, setSelectedTerm] = useState<
-    "term_1" | "term_2" | "term_3" | "term_4"
-  >("term_1");
-
-  if (!profile || !profile.subjects) return null;
-
-  const subjectsList = Object.values(profile.subjects);
+  if (isEmpty || !profile) return null;
 
   const handleTargetChange = (
     subjectId: string,
@@ -43,25 +46,15 @@ const GradeCalculator: FC = observer(() => {
         исправить балл за четверть
       </p>
 
-      <div className={s.tabs}>
-        {(
-          ["term_1", "term_2", "term_3", "term_4"] as const
-        ).map((key) => (
-          <button
-            key={key}
-            onClick={() => setSelectedTerm(key)}
-            className={`${s.tabBtn} ${selectedTerm === key ? s.tabBtnActive : s.tabBtnInactive}`}
-          >
-            {key === "term_1"
-              ? "I ч."
-              : key === "term_2"
-                ? "II ч."
-                : key === "term_3"
-                  ? "III ч."
-                  : "IV ч."}
-          </button>
-        ))}
-      </div>
+      <TermSelector
+        {...termSelector}
+        classes={{
+          tabs: s.tabs,
+          tabBtn: s.tabBtn,
+          tabBtnActive: s.tabBtnActive,
+          tabBtnInactive: s.tabBtnInactive,
+        }}
+      />
 
       <div className={s.grid}>
         {subjectsList.map((subject) => {

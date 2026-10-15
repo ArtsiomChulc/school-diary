@@ -1,19 +1,8 @@
-import { useState } from "react";
-import {
-  userStore,
-  type ISubject,
-} from "../../store/UserStore.tsx";
+import { useTermSelection } from "../../hooks/useTermSelection.ts";
+import type { ISubject } from "../../store/UserStore.tsx";
+import { useStudentSubjects } from "../../hooks/useStudentSubjects.ts";
+import { calculateSubjectStats } from "../../utils/subjectStatistics.ts";
 import s from "./Statistics.module.css";
-
-export type TermKey = Extract<
-  keyof ISubject,
-  `term_${number}`
->;
-
-export interface TermOption {
-  key: TermKey;
-  label: string;
-}
 
 export interface SubjectStatistics {
   id: ISubject["id"];
@@ -24,24 +13,6 @@ export interface SubjectStatistics {
   finalMark?: number | null;
 }
 
-const terms: readonly TermOption[] = [
-  { key: "term_1", label: "I ч." },
-  { key: "term_2", label: "II ч." },
-  { key: "term_3", label: "III ч." },
-  { key: "term_4", label: "IV ч." },
-];
-
-const calculateSubjectStats = (
-  marks: readonly number[] = [],
-) => {
-  if (marks.length === 0) return { average: 0, count: 0 };
-  const sum = marks.reduce((acc, mark) => acc + mark, 0);
-  return {
-    average: Number((sum / marks.length).toFixed(1)),
-    count: marks.length,
-  };
-};
-
 const getBadgeClass = (average: number): string => {
   if (average >= 8) return s.badgeHigh;
   if (average >= 6) return s.badgeMedium;
@@ -49,35 +20,33 @@ const getBadgeClass = (average: number): string => {
   return s.badgeCritical;
 };
 
-// Call from an observer component so MobX tracks all observable reads below.
 export const useStatistics = () => {
-  const [selectedTerm, setSelectedTerm] =
-    useState<TermKey>("term_1");
-  const { profile } = userStore;
+  const termSelector = useTermSelection();
+  const { selectedTerm } = termSelector;
+  const {
+    profile,
+    subjects: studentSubjects,
+    isEmpty,
+  } = useStudentSubjects();
 
-  // Derive during rendering: observable arrays can change without changing identity.
-  const subjects: SubjectStatistics[] = Object.values(
-    profile?.subjects ?? {},
-  ).map((subject) => {
-    const termData = subject[selectedTerm];
-    const stats = calculateSubjectStats(termData?.marks);
-    return {
-      id: subject.id,
-      name: subject.name,
-      ...stats,
-      badgeClass: getBadgeClass(stats.average),
-      finalMark: termData?.finalMark,
-    };
-  });
+  const subjects: SubjectStatistics[] = studentSubjects.map(
+    (subject) => {
+      const termData = subject[selectedTerm];
+      const stats = calculateSubjectStats(termData?.marks);
+      return {
+        id: subject.id,
+        name: subject.name,
+        ...stats,
+        badgeClass: getBadgeClass(stats.average),
+        finalMark: termData?.finalMark,
+      };
+    },
+  );
 
   return {
     studentName: profile?.name ?? "",
-    isEmpty: !profile?.subjects,
+    isEmpty,
     subjects,
-    termSelector: {
-      terms,
-      selectedTerm,
-      onSelectTerm: setSelectedTerm,
-    },
+    termSelector,
   };
 };

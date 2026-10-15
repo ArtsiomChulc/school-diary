@@ -1,6 +1,9 @@
 import { observer } from "mobx-react-lite";
-import { userStore } from "../../../store/UserStore.tsx";
-import type { ISubject } from "../../../store/UserStore.ts";
+import { useStudentSubjects } from "../../../hooks/useStudentSubjects.ts";
+import {
+  calculateYearlyMark,
+  terms,
+} from "../../../utils/subjectStatistics.ts";
 import type { FC } from "react";
 import s from "./SubjectsTable.module.css";
 
@@ -10,7 +13,12 @@ interface MainTableProps {
 
 export const SubjectsTable: FC<MainTableProps> = observer(
   ({ onSelectSubject }) => {
-    const { profile, isLoading } = userStore;
+    const {
+      profile,
+      isLoading,
+      isEmpty,
+      subjects: subjectsList,
+    } = useStudentSubjects();
 
     if (isLoading)
       return (
@@ -18,36 +26,8 @@ export const SubjectsTable: FC<MainTableProps> = observer(
           Загрузка дневника...
         </div>
       );
-    if (!profile || !profile.subjects)
+    if (isEmpty || !profile)
       return <div className={s.centered}>Нет данных</div>;
-
-    const subjectsList = Object.values(profile.subjects);
-    const terms: (
-      "term_1" | "term_2" | "term_3" | "term_4"
-    )[] = ["term_1", "term_2", "term_3", "term_4"];
-
-    const calculateYearlyMark = (
-      subject: ISubject,
-    ): number | string => {
-      const finalMarks: number[] = [];
-
-      terms.forEach((termKey) => {
-        const finalMark = subject[termKey]?.finalMark;
-        if (finalMark !== undefined && finalMark !== null) {
-          finalMarks.push(finalMark);
-        }
-      });
-
-      if (finalMarks.length === 0) return "—";
-
-      const sum = finalMarks.reduce(
-        (acc, val) => acc + val,
-        0,
-      );
-      const average = sum / finalMarks.length;
-
-      return Math.round(average);
-    };
 
     return (
       <div className={s.container}>
@@ -65,15 +45,16 @@ export const SubjectsTable: FC<MainTableProps> = observer(
             <thead>
               <tr>
                 <th className={s.thLeft}>Предмет</th>
-                <th className={s.th}>I четв.</th>
-                <th className={s.th}>II четв.</th>
-                <th className={s.th}>III четв.</th>
-                <th className={s.th}>IV четв.</th>
+                {terms.map(({ key, tableLabel }) => (
+                  <th key={key} className={s.th}>
+                    {tableLabel}
+                  </th>
+                ))}
                 <th className={s.thYearly}>Годовая</th>
               </tr>
             </thead>
             <tbody>
-              {subjectsList.map((subject: ISubject) => {
+              {subjectsList.map((subject) => {
                 const yearlyMark =
                   calculateYearlyMark(subject);
 
@@ -88,7 +69,7 @@ export const SubjectsTable: FC<MainTableProps> = observer(
                       {subject.name}
                     </td>
 
-                    {terms.map((termKey) => {
+                    {terms.map(({ key: termKey }) => {
                       const finalMark =
                         subject[termKey]?.finalMark;
                       return (
@@ -119,7 +100,7 @@ export const SubjectsTable: FC<MainTableProps> = observer(
                         </span>
                       ) : (
                         <span className={s.empty}>
-                          {yearlyMark}
+                          —
                         </span>
                       )}
                     </td>
