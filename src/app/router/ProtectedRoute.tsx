@@ -6,14 +6,14 @@ import {
 } from "react-router";
 import { userStore } from "../../store/UserStore.tsx";
 import { observer } from "mobx-react-lite";
-import Loading from "../../components/organizms/loading/Loading.tsx";
+import { LoaderPotter } from "../../components/organizms/loading/LoaderPotter.tsx";
 
 export const ProtectedRoute: FC = observer(() => {
   const location = useLocation();
   const { isLoading, user } = userStore;
 
   if (isLoading) {
-    return <Loading message="Проверяем школьный журнал" />;
+    return <LoaderPotter text={"Шалость удалась"} />;
   }
 
   if (!user) {

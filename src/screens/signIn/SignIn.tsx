@@ -7,7 +7,7 @@ import { type SyntheticEvent, useState } from "react";
 import { userStore } from "../../store/UserStore.tsx";
 import { useLocation, useNavigate } from "react-router";
 import { observer } from "mobx-react-lite";
-import Loading from "../../components/organizms/loading/Loading.tsx";
+import { LoaderPotter } from "../../components/organizms/loading/LoaderPotter.tsx";
 import s from "./SignIn.module.css";
 
 export const SignIn = observer(() => {
@@ -34,7 +34,7 @@ export const SignIn = observer(() => {
   };
 
   if (isLoading) {
-    return <Loading message={"Загружаем профиль"} />;
+    return <LoaderPotter text={"Загружаем профиль"} />;
   }
 
   return (

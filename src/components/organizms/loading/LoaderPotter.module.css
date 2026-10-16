@@ -1,0 +1,126 @@
+.loaderOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #15100E;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    font-family: 'Cinzel', 'Georgia', serif;
+    overflow: hidden;
+}
+
+.magicContainer {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wizardCircle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 4px double transparent;
+    border-top-color: #D4AF37;
+    border-bottom-color: #740001;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    animation: spinCircle 2s linear infinite;
+    z-index: 2;
+}
+
+.wizardCircleInner {
+    position: absolute;
+    width: 85%;
+    height: 85%;
+    border: 2px dashed rgba(212, 175, 55, 0.4);
+    border-radius: 50%;
+    animation: spinCircleInverse 4s linear infinite;
+    z-index: 1;
+}
+
+.characterWrapper {
+    position: relative;
+    width: 75%;
+    height: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #1a1513;
+}
+
+.characterImage {
+    width: auto;
+    height: 140%;
+    object-fit: contain;
+    transform: translateY(15px);
+    mix-blend-mode: lighten;
+    opacity: 0.9;
+    animation: levitate 3s ease-in-out infinite, materialize 1.5s ease-out forwards;
+}
+
+.lumosSparkle {
+    position: absolute;
+    left: 21%;
+    bottom: 34%;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow:
+            0 0 10px #fff,
+            0 0 25px #D4AF37,
+            0 0 45px #FAF9F6;
+    animation: lumosPulse 1.5s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.loadingText {
+    margin-top: 30px;
+    color: #F5F2EB;
+    font-size: 1.25rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    animation: pulseText 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes spinCircle {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spinCircleInverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes levitate {
+    0%, 100% { transform: translateY(15px); }
+    50% { transform: translateY(5px); }
+}
+
+@keyframes materialize {
+    0% { opacity: 0; filter: contrast(1.5) brightness(0.2); }
+    100% { opacity: 0.95; filter: contrast(1) brightness(1); }
+}
+
+@keyframes lumosPulse {
+    0% { transform: scale(0.8); box-shadow: 0 0 10px #fff, 0 0 20px #D4AF37; }
+    100% { transform: scale(1.4); box-shadow: 0 0 15px #fff, 0 0 35px #D4AF37, 0 0 50px #fff; }
+}
+
+@keyframes pulseText {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
