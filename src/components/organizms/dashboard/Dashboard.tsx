@@ -6,7 +6,7 @@ import {
   useLocation,
 } from "react-router";
 import { SubjectDetails } from "../subjectDetails/SubjectDetails.tsx";
-import { SubjectsTable } from "../subjectsTable/SubjectsTable.tsx";
+import { SubjectsTable } from "../../../screens/subjectsTable/SubjectsTable.tsx";
 import GradeCalculator from "../../../screens/gradeCalculator/GradeCalculator.tsx";
 
 export const Dashboard: FC = observer(() => {

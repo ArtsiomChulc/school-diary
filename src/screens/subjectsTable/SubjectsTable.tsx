@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
-import { useStudentSubjects } from "../../../hooks/useStudentSubjects.ts";
+import { useStudentSubjects } from "../../hooks/useStudentSubjects.ts";
 import {
   calculateYearlyMark,
   terms,
-} from "../../../utils/subjectStatistics.ts";
+} from "../../utils/subjectStatistics.ts";
 import type { FC } from "react";
 import s from "./SubjectsTable.module.css";
 
@@ -99,9 +99,7 @@ export const SubjectsTable: FC<MainTableProps> = observer(
                           {yearlyMark}
                         </span>
                       ) : (
-                        <span className={s.empty}>
-                          —
-                        </span>
+                        <span className={s.empty}>—</span>
                       )}
                     </td>
                   </tr>
