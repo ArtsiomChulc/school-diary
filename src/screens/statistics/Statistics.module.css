@@ -56,7 +56,7 @@
 
 .distributionList {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 8px 20px;
     margin: 14px 0 0;
 }
@@ -65,9 +65,10 @@
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    padding: 8px 0;
+    padding: 8px 12px;
+    border-radius: 8px;
     font-size: 14px;
-    border-bottom: 1px solid var(--border-color, #e1e4e8);
+    border: 1px solid var(--border-color, #e1e4e8);
 }
 
 .distributionRow dd {
