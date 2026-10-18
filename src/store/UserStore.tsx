@@ -47,7 +47,7 @@ export interface IParentProfile {
   email: string;
   role: string;
   createdAt: Date;
-  children: string[]; // Массив UID детей
+  children: string[];
 }
 
 class UserStore {

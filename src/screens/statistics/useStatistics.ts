@@ -45,6 +45,9 @@ export const useStatistics = () => {
 
   return {
     studentName: profile?.name ?? "",
+    grades: studentSubjects.flatMap(
+      (subject) => subject[selectedTerm]?.marks ?? [],
+    ),
     isEmpty,
     subjects,
     termSelector,

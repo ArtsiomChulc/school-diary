@@ -17,8 +17,7 @@ export const SignIn = observer(() => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const fromPage =
-    location.state?.from?.pathname || "/subjects";
+  const fromPage = location.state?.from?.pathname || "/";
 
   const { login, authError, isLoading } = userStore;
 
