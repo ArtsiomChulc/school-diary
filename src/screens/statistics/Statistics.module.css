@@ -133,25 +133,21 @@
     text-align: center;
 }
 
-/* Цветовое кодирование уровней по системе образования РБ */
 .badgeHigh {
-    background-color: #e6f4ea;
-    color: #137333;
+    background-color: var(--badge-high-bg);
+    color: var(--badge-high-text);
 }
-
 .badgeMedium {
-    background-color: #fef7e0;
-    color: #b06000;
+    background-color: var(--badge-medium-bg);
+    color: var(--badge-medium-text);
 }
-
 .badgeLow {
-    background-color: #feefe3;
-    color: #c26401;
+    background-color: var(--badge-low-bg);
+    color: var(--badge-low-text);
 }
-
 .badgeCritical {
-    background-color: #fce8e6;
-    color: #c5221f;
+    background-color: var(--badge-critical-bg);
+    color: var(--badge-critical-text);
 }
 
 .cardBody {

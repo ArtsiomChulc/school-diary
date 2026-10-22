@@ -7,6 +7,15 @@
   --text-secondary: #62534d;
   --text-color-btn: #faf9f6;
 
+  --badge-high-bg: #c2e7cd;
+  --badge-high-text: #0a5220;
+  --badge-medium-bg: #ffe082;
+  --badge-medium-text: #6d3d00;
+  --badge-low-bg: #ffcc80;
+  --badge-low-text: #793600;
+  --badge-critical-bg: #f9cbd2;
+  --badge-critical-text: #960f0f;
+
   --bg: #faf9f6;
   --bg-main: #f7f5f0;
   --bg-header: rgb(250 249 246 / 0.9);
@@ -55,6 +64,15 @@
   --text-main: #f5f2eb;
   --text-secondary: #d0c3b9;
   --text-color-btn: #15100e;
+
+  --badge-high-bg: #0f3d1b;
+  --badge-high-text: #a7f3d0;
+  --badge-medium-bg: #4d3800;
+  --badge-medium-text: #fde68a;
+  --badge-low-bg: #532300;
+  --badge-low-text: #fed7aa;
+  --badge-critical-bg: #5c0f16;
+  --badge-critical-text: #fca5a5;
 
   --bg-main: #15100e;
   --bg: #1c1513;

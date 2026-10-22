@@ -5,6 +5,7 @@ import { Header } from "../../components/organizms/header/Header.tsx";
 import toast from "react-hot-toast";
 import { MainContainer } from "../../components/organizms/containers/main_container/MainContainer.tsx";
 import { userStore } from "../../store/UserStore.tsx";
+import { PATHS } from "../router/PATHS.ts";
 import s from "./Layout.module.css";
 
 export const Layout: FC = () => {
@@ -13,7 +14,7 @@ export const Layout: FC = () => {
   const handleLogout = async () => {
     try {
       await userStore.logout();
-      navigate("/login");
+      navigate(PATHS.login);
     } catch (error) {
       toast.error("Ошибка при выходе из системы");
       console.error("Ошибка при выходе из системы:", error);

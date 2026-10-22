@@ -6,10 +6,11 @@ import GradeCalculator from "../../../screens/gradeCalculator/GradeCalculator.ts
 import { MainScreen } from "../../../screens/mainScreen/MainScreen.tsx";
 import { SubjectDetails } from "../../../components/organizms/subjectDetails/SubjectDetails.tsx";
 import { Statistics } from "../../../screens/statistics/Statistics.tsx";
+import { PATHS } from "../PATHS.ts";
 
 export const router = createBrowserRouter([
   {
-    path: "/login",
+    path: PATHS.login,
     element: <SignIn />,
     errorElement: <div>not found</div>,
   },
@@ -27,15 +28,15 @@ export const router = createBrowserRouter([
             element: <Statistics />,
           },
           {
-            path: "subjects",
+            path: PATHS.subjects,
             element: <MainScreen />,
           },
           {
-            path: "calculator",
+            path: PATHS.calculator,
             element: <GradeCalculator />,
           },
           {
-            path: "subjects/:subjectId",
+            path: `${PATHS.subjects}/:subjectId`,
             element: <SubjectDetails />,
           },
         ],

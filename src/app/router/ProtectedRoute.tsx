@@ -7,6 +7,7 @@ import {
 import { userStore } from "../../store/UserStore.tsx";
 import { observer } from "mobx-react-lite";
 import { LoaderPotter } from "../../components/organizms/loading/LoaderPotter.tsx";
+import { PATHS } from "./PATHS.ts";
 
 export const ProtectedRoute: FC = observer(() => {
   const location = useLocation();
@@ -19,7 +20,7 @@ export const ProtectedRoute: FC = observer(() => {
   if (!user) {
     return (
       <Navigate
-        to="/login"
+        to={PATHS.login}
         state={{ from: location }}
         replace
       />

@@ -2,6 +2,7 @@ import { GraduationCap, Percent } from "lucide-react";
 import { useNavigate } from "react-router";
 import { Text } from "../../components/atoms/text/Text.tsx";
 import type { SubjectStatistics } from "./useStatistics.ts";
+import { PATHS } from "../../app/router/PATHS.ts";
 import s from "./Statistics.module.css";
 
 interface SubjectCardProps {
@@ -24,7 +25,7 @@ export const SubjectCard = ({
   return (
     <div
       className={s.card}
-      onClick={() => navigate(`/subjects/${id}`)}
+      onClick={() => navigate(`${PATHS.subjects}/${id}`)}
       title="Открыть детали предмета"
     >
       <div className={s.cardHeader}>
