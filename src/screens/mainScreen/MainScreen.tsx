@@ -6,11 +6,7 @@ import s from "./MainScreen.module.css";
 
 export const MainScreen = observer(() => {
   const { profile } = userStore;
-  //todo delete code
-  // const handleCreateUser = async () => {
-  //     await quickCreateUser()
 
-  // }
   if (!profile) {
     return (
       <Text as={"p"} weight={500} size={"large"}>

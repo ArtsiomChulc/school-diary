@@ -28,7 +28,6 @@ export interface ISubject {
   term_4?: ITermMarks;
 }
 
-// Интерфейс профиля ученика
 export interface IStudentProfile {
   uid: string;
   name: string;
@@ -40,7 +39,6 @@ export interface IStudentProfile {
   telegramChatIds: string | string[];
 }
 
-// Интерфейс профиля родителя
 export interface IParentProfile {
   uid: string;
   name: string;
@@ -53,8 +51,8 @@ export interface IParentProfile {
 class UserStore {
   user: FirebaseUser | null = null;
   currentUserProfile:
-    IStudentProfile | IParentProfile | null = null; // Кто залогинен (Родитель или Ученик)
-  profile: IStudentProfile | null = null; // Чей дневник открыт (например, Стефания)
+    IStudentProfile | IParentProfile | null = null;
+  profile: IStudentProfile | null = null;
   isLoading: boolean = true;
   authError: string | null = null;
 
@@ -85,7 +83,6 @@ class UserStore {
 
   private async fetchUserProfile(uid: string) {
     try {
-      // 1. Проверяем, есть ли пользователь в коллекции учеников (users)
       const userDocRef = doc(db, "users", uid);
       const userDocSnap = await getDoc(userDocRef);
 
@@ -101,13 +98,12 @@ class UserStore {
             subjects: subjectsMap,
           };
           this.profile = this
-            .currentUserProfile as IStudentProfile; // У ученика профили совпадают
+            .currentUserProfile as IStudentProfile;
           this.isLoading = false;
         });
         return;
       }
 
-      // 2. Если в учениках нет, ищем в коллекции родителей (parents)
       const parentDocRef = doc(db, "parents", uid);
       const parentDocSnap = await getDoc(parentDocRef);
 
@@ -119,7 +115,6 @@ class UserStore {
           this.currentUserProfile = parentData;
         });
 
-        // Автоматически подгружаем дневник первого ребенка из массива children, если он есть
         if (
           parentData.children &&
           parentData.children.length > 0
@@ -135,9 +130,8 @@ class UserStore {
         return;
       }
 
-      // 3. Если нигде не нашли
       toast.error(
-        "Документ пользователя не найден в Firestore",
+        "Документ пользователя не найден в базе данных",
       );
       runInAction(() => {
         this.currentUserProfile = null;
@@ -153,7 +147,6 @@ class UserStore {
     }
   }
 
-  // Вспомогательный метод для загрузки подколлекции предметов конкретного ученика
   private async fetchStudentSubjects(
     studentUid: string,
   ): Promise<Record<string, ISubject>> {
@@ -176,9 +169,6 @@ class UserStore {
     return subjectsMap;
   }
 
-  /**
-   * Метод для явного переключения/загрузки дневника конкретного ребенка (нужен для UI родителей)
-   */
   loadStudentProfile = async (studentUid: string) => {
     try {
       runInAction(() => {
@@ -248,7 +238,7 @@ class UserStore {
         const url = new URL(base + action);
         url.searchParams.append("chat_id", trimmedId);
         url.searchParams.append("text", text);
-        url.searchParams.append("parse_mode", "HTML"); // Оставляем поддержку HTML-тегов для красоты
+        url.searchParams.append("parse_mode", "HTML");
 
         return fetch(url.toString(), { mode: "no-cors" });
       });
@@ -286,7 +276,6 @@ class UserStore {
         this.isLoading = true;
       });
 
-      // 1. Формируем новые данные
       const currentSubject =
         this.profile.subjects[subjectId];
       const currentTermData = currentSubject?.[termKey] || {
@@ -319,7 +308,6 @@ class UserStore {
         [`${termKey}.finalMark`]: calculatedFinalMark,
       });
 
-      // 4. Отправка уведомления
       try {
         if (this.profile && this.profile.telegramChatIds) {
           const termNames = {
@@ -351,7 +339,8 @@ class UserStore {
             `📅 Четверть: <b>${termNames[termKey]}</b>\n` +
             `💯 Оценка: <b>${newMark}</b>\n\n` +
             `⏰ <i>Добавлено: ${formattedDateTime}</i>\n` +
-            `👤 Добавил(а): <b>${authorName}</b>`;
+            `👤 Добавил(а): <b>${authorName}</b>\n\n` +
+            `🔄 <b>НОВЫЙ ИТОГ ЗА ЧЕТВЕРТЬ: ${calculatedFinalMark}</b>`;
 
           await this.sendTelegramNotification(
             this.profile.telegramChatIds,
@@ -362,7 +351,6 @@ class UserStore {
         console.error("Ошибка при вызове уведомления:", e);
       }
 
-      // 5. Обновляем локальное состояние в MobX
       runInAction(() => {
         if (this.profile?.subjects?.[subjectId]) {
           this.profile.subjects[subjectId][termKey] = {
@@ -451,7 +439,7 @@ class UserStore {
         }
         this.isLoading = false;
       });
-      // Отправка уведомления об удалении
+
       try {
         if (this.profile && this.profile.telegramChatIds) {
           const termNames = {
@@ -481,7 +469,9 @@ class UserStore {
             `📅 Четверть: <b>${termNames[termKey]}</b>\n` +
             `❌ Удалена оценка: <b>${deletedMark}</b>\n\n` +
             `⏰ <i>Время удаления: ${formattedDateTime}</i>\n` +
-            `👤 Удалил(а): <b>${authorName}</b>`;
+            `👤 Удалил(а): <b>${authorName}</b>\n\n` +
+            `🔄 <b>НОВЫЙ ИТОГ ЗА ЧЕТВЕРТЬ: ${calculatedFinalMark}</b>`;
+
           await this.sendTelegramNotification(
             this.profile.telegramChatIds,
             message,
@@ -586,67 +576,90 @@ class UserStore {
 export const userStore = new UserStore();
 
 // todo delete code
-// import { setDoc, serverTimestamp } from 'firebase/firestore';
-//
+// import {
+//   setDoc,
+//   serverTimestamp,
+// } from "firebase/firestore";
 //
 // export const quickCreateUser = async () => {
-//     // 1. Прописываем данные нового пользователя
-//     const userId = "GapDFcFCLCUHO8Qlv25C0I2FNWj2";
+//   // 1. Прописываем данные нового пользователя
+//   const userId = "GapDF12345cFCLCUHO8Qlv25C0I2FNWj212345";
 //
-//     const userRef = doc(db, 'users', userId);
+//   const userRef = doc(db, "users", userId);
 //
-//     try {
-//         // 2. Создаем самого пользователя
-//         await setDoc(userRef, {
-//             uid: userId,
-//             name: "Стефания Чульц",
-//             email: "artemorsha@mail.ru",
-//             class: "10 Б",
-//             role: "ученица",
-//             createdAt: serverTimestamp()
-//         });
+//   try {
+//     // 2. Создаем самого пользователя
+//     await setDoc(userRef, {
+//       uid: userId,
+//       name: "User Test",
+//       email: "use_test@mail.com",
+//       class: "10 Б",
+//       role: "ученица",
+//       telegramChatIds: [8128695218],
+//       createdAt: serverTimestamp(),
+//     });
 //
-//         // 3. Сразу же создаем базовые предметы в его подколлекции "subjects"
-//         const defaultSubjects = [
-//             { id: 'blrlang', name: 'Белорусский язык' },
-//             { id: 'blrlit', name: 'Белорусская литература (Литературное чтение)' },
-//             { id: 'ruslang', name: 'Русский язык' },
-//             { id: 'ruslit', name: 'Русская литература (Литературное чтение)' },
-//             { id: 'foreign_lang', name: 'Иностранный язык' }, // Обычно английский, немецкий, немецкий или французский
+//     // 3. Сразу же создаем базовые предметы в его подколлекции "subjects"
+//     const defaultSubjects = [
+//       { id: "blrlang", name: "Белорусский язык" },
+//       {
+//         id: "blrlit",
+//         name: "Белорусская литература (Литературное чтение)",
+//       },
+//       { id: "ruslang", name: "Русский язык" },
+//       {
+//         id: "ruslit",
+//         name: "Русская литература (Литературное чтение)",
+//       },
+//       { id: "foreign_lang", name: "Иностранный язык" }, // Обычно английский, немецкий, немецкий или французский
 //
-//             { id: 'math', name: 'Математика' },
+//       { id: "math", name: "Математика" },
 //
-//             { id: 'human_and_world', name: 'Человек и мир' },
-//             { id: 'may_radzima', name: 'Мая Радзіма — Беларусь' }, // Специальный блок в курсе "Человек и мир" для 4 класса
+//       { id: "human_and_world", name: "Человек и мир" },
+//       { id: "may_radzima", name: "Мая Радзіма — Беларусь" }, // Специальный блок в курсе "Человек и мир" для 4 класса
 //
-//             { id: 'art', name: 'Изобразительное искусство' },
-//             { id: 'music', name: 'Музыка' },
-//             { id: 'labor', name: 'Трудовое обучение' },
+//       { id: "art", name: "Изобразительное искусство" },
+//       { id: "music", name: "Музыка" },
+//       { id: "labor", name: "Трудовое обучение" },
 //
-//             { id: 'physical_edu', name: 'Физическая культура и здоровье' },
-//             { id: 'obzh', name: 'Основы безопасности жизнедеятельности (ОБЖ)' }
-//         ];
+//       {
+//         id: "physical_edu",
+//         name: "Физическая культура и здоровье",
+//       },
+//       {
+//         id: "obzh",
+//         name: "Основы безопасности жизнедеятельности (ОБЖ)",
+//       },
+//     ];
 //
-//         // Пустая структура четвертей, чтобы потом просто дополнять массивы
-//         const emptyTerm = {
-//             marks: [],
-//             finalMark: null
-//         };
+//     // Пустая структура четвертей, чтобы потом просто дополнять массивы
+//     const emptyTerm = {
+//       marks: [],
+//       finalMark: null,
+//     };
 //
-//         for (const subject of defaultSubjects) {
-//             const subjectRef = doc(db, 'users', userId, 'subjects', subject.id);
+//     for (const subject of defaultSubjects) {
+//       const subjectRef = doc(
+//         db,
+//         "users",
+//         userId,
+//         "subjects",
+//         subject.id,
+//       );
 //
-//             await setDoc(subjectRef, {
-//                 name: subject.name,
-//                 term_1: emptyTerm,
-//                 term_2: emptyTerm,
-//                 term_3: emptyTerm,
-//                 term_4: emptyTerm
-//             });
-//         }
-//
-//         console.log('Пользователь и все его предметы успешно созданы в Firestore!');
-//     } catch (error) {
-//         console.error('Ошибка при создании:', error);
+//       await setDoc(subjectRef, {
+//         name: subject.name,
+//         term_1: emptyTerm,
+//         term_2: emptyTerm,
+//         term_3: emptyTerm,
+//         term_4: emptyTerm,
+//       });
 //     }
+//
+//     toast.success(
+//       "Пользователь и все его предметы успешно созданы в базе данных!",
+//     );
+//   } catch (error: any) {
+//     toast.error("Ошибка при создании:", error);
+//   }
 // };

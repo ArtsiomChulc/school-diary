@@ -12,7 +12,6 @@ export const SubjectDetails: FC = observer(() => {
   const navigate = useNavigate();
   const { subjectId } = useParams<{ subjectId: string }>();
 
-  // 1. Деструктуризируем ТОЛЬКО реактивные свойства. Функции оставляем в userStore!
   const { profile, isLoading } = userStore;
 
   const [selectedTerm, setSelectedTerm] = useState<
@@ -22,7 +21,6 @@ export const SubjectDetails: FC = observer(() => {
   const [showMarkSelector, setShowMarkSelector] =
     useState(false);
 
-  // 2. Предохранитель для TypeScript и загрузки данных
   if (!subjectId || !profile || !profile.subjects)
     return null;
 
@@ -37,7 +35,6 @@ export const SubjectDetails: FC = observer(() => {
   const currentTermData = subject[selectedTerm];
 
   const handleAddMark = async (mark: number) => {
-    // Вызываем метод СТРОГО через объект userStore, чтобы сохранить контекст this
     await userStore.addMarkAndSave(
       profile.uid,
       subjectId,
@@ -52,22 +49,21 @@ export const SubjectDetails: FC = observer(() => {
 
     const deletedMark = currentTermData.marks[index];
 
-    // Вызываем удаление через точку
-    userStore.deleteMarkAndSave(
-      profile.uid,
-      subjectId,
-      selectedTerm,
-      index,
-    );
+    userStore
+      .deleteMarkAndSave(
+        profile.uid,
+        subjectId,
+        selectedTerm,
+        index,
+      )
+      .then();
 
-    // Умная отмена удаления через кастомный тост
     toast(
       (t) => (
         <Text color={"var(--text-main)"}>
           Оценка <b>{deletedMark}</b> удалена.
           <Button
             onClick={async () => {
-              // При отмене тоже вызываем через объект
               await userStore.addMarkAndSave(
                 profile.uid,
                 subjectId,
