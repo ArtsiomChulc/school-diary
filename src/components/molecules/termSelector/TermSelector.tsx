@@ -1,13 +1,14 @@
 import { Button } from "../../atoms/button/Button.tsx";
-import type {
-  TermKey,
-  TermOption,
-} from "../../../utils/subjectStatistics.ts";
 
-interface TermSelectorProps {
-  terms: readonly TermOption[];
-  selectedTerm: TermKey;
-  onSelectTerm: (term: TermKey) => void;
+interface SelectOption<T extends string | number> {
+  readonly key: T;
+  readonly label: string;
+}
+
+interface TermSelectorProps<T extends string | number> {
+  terms: readonly SelectOption<T>[];
+  selectedTerm: T;
+  onSelectTerm: (term: T) => void;
   classes: {
     tabs: string;
     tabBtn: string;
@@ -16,12 +17,12 @@ interface TermSelectorProps {
   };
 }
 
-export const TermSelector = ({
+export const TermSelector = <T extends string | number>({
   terms,
   selectedTerm,
   onSelectTerm,
   classes: s,
-}: TermSelectorProps) => (
+}: TermSelectorProps<T>) => (
   <div className={s.tabs}>
     {terms.map(({ key, label }) => (
       <Button

@@ -7,6 +7,7 @@ import {
   HomeIcon,
   OutdentIcon,
   SunMoon,
+  BookmarkCheck,
 } from "lucide-react";
 import { NickNameIco } from "../../atoms/nickNameIco/NickNameIco.tsx";
 import useTheme from "../../../hooks/useTheme.ts";
@@ -16,6 +17,7 @@ import { observer } from "mobx-react-lite";
 import useWindowWidth from "../../../hooks/useWindowSize.ts";
 import { Hamburger } from "../../molecules/hamburger/Hamburger.tsx";
 import s from "./Header.module.css";
+import { PATHS } from "../../../app/router/PATHS.ts";
 
 interface Props {
   handleLogout: () => void;
@@ -29,7 +31,7 @@ export const Header: FC<Props> = observer(
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const mobile = width <= 868;
+    const mobile = width <= 1028;
 
     const toggleMenu = () => setIsMenuOpen((prev) => !prev);
     const closeMenu = () => setIsMenuOpen(false);
@@ -48,7 +50,7 @@ export const Header: FC<Props> = observer(
               <Text as="span">Домой</Text>
             </NavLink>
             <NavLink
-              to="/calculator"
+              to={PATHS.calculator}
               className={({ isActive }) =>
                 `${s.header_btn} ${isActive ? s.active : ""}`
               }
@@ -56,12 +58,20 @@ export const Header: FC<Props> = observer(
               <Text as="span">Калькулятор оценок</Text>
             </NavLink>
             <NavLink
-              to="/subjects"
+              to={PATHS.subjects}
               className={({ isActive }) =>
                 `${s.header_btn} ${isActive ? s.active : ""}`
               }
             >
               <Text as="span">Дневник</Text>
+            </NavLink>
+            <NavLink
+              to={PATHS.schedule}
+              className={({ isActive }) =>
+                `${s.header_btn} ${isActive ? s.active : ""}`
+              }
+            >
+              <Text as="span">Расписание</Text>
             </NavLink>
             <Button
               onClick={toggleTheme}
@@ -149,7 +159,7 @@ export const Header: FC<Props> = observer(
                 </NavLink>
 
                 <NavLink
-                  to="/subjects"
+                  to={PATHS.subjects}
                   onClick={closeMenu}
                   className={({ isActive }) =>
                     `${s.sidebar_link} ${isActive ? s.sidebar_link_active : ""}`
@@ -160,7 +170,7 @@ export const Header: FC<Props> = observer(
                 </NavLink>
 
                 <NavLink
-                  to="/calculator"
+                  to={PATHS.calculator}
                   onClick={closeMenu}
                   className={({ isActive }) =>
                     `${s.sidebar_link} ${isActive ? s.sidebar_link_active : ""}`
@@ -168,6 +178,16 @@ export const Header: FC<Props> = observer(
                 >
                   <Calculator size={22} />
                   <Text as="span">Калькулятор</Text>
+                </NavLink>
+                <NavLink
+                  to={PATHS.schedule}
+                  onClick={closeMenu}
+                  className={({ isActive }) =>
+                    `${s.sidebar_link} ${isActive ? s.sidebar_link_active : ""}`
+                  }
+                >
+                  <BookmarkCheck size={22} />
+                  <Text as="span">Расписание</Text>
                 </NavLink>
               </nav>
 

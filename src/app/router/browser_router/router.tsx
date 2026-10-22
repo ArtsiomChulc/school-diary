@@ -7,6 +7,7 @@ import { MainScreen } from "../../../screens/mainScreen/MainScreen.tsx";
 import { SubjectDetails } from "../../../components/organizms/subjectDetails/SubjectDetails.tsx";
 import { Statistics } from "../../../screens/statistics/Statistics.tsx";
 import { PATHS } from "../PATHS.ts";
+import Schedule from "../../../screens/schedule/Schedule.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
           {
             path: `${PATHS.subjects}/:subjectId`,
             element: <SubjectDetails />,
+          },
+          {
+            path: PATHS.schedule,
+            element: <Schedule />,
           },
         ],
       },
